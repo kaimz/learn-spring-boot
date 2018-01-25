@@ -23,6 +23,5 @@ hs_err_pid*
 
 .idea/
 .mvn
-mvnw.cmd
 learnboot.iml
 target
