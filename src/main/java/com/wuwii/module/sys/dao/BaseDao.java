@@ -1,4 +1,4 @@
-package com.wuwii.dao;
+package com.wuwii.module.sys.dao;
 
 import java.util.List;
 import java.util.Map;

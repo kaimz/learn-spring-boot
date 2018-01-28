@@ -1,0 +1,101 @@
+package io.renren.modules.generator.entity;
+
+import com.wuwii.module.sys.model.BaseDO;
+
+import java.io.Serializable;
+import java.util.Date;
+
+
+/**
+ * 
+ * 
+ * @author chenshun
+ * @email sunlightcs@gmail.com
+ * @date 2018-01-26 17:25:25
+ */
+public class SysMenuEntity extends BaseDO {
+	//目录名称
+	private String menuName;
+	//菜单URL
+	private String menuUrl;
+	//授权(多个用逗号分隔，如：user:list,user:create)
+	private String perms;
+	//菜单icon
+	private String menuIcon;
+	//父级目录，0是顶级
+	private Long parentId;
+	//菜单类型：  0：目录   1：菜单   2：按钮
+	private Integer type;
+	/**
+	 * 设置：目录名称
+	 */
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
+	}
+	/**
+	 * 获取：目录名称
+	 */
+	public String getMenuName() {
+		return menuName;
+	}
+	/**
+	 * 设置：菜单URL
+	 */
+	public void setMenuUrl(String menuUrl) {
+		this.menuUrl = menuUrl;
+	}
+	/**
+	 * 获取：菜单URL
+	 */
+	public String getMenuUrl() {
+		return menuUrl;
+	}
+	/**
+	 * 设置：授权(多个用逗号分隔，如：user:list,user:create)
+	 */
+	public void setPerms(String perms) {
+		this.perms = perms;
+	}
+	/**
+	 * 获取：授权(多个用逗号分隔，如：user:list,user:create)
+	 */
+	public String getPerms() {
+		return perms;
+	}
+	/**
+	 * 设置：菜单icon
+	 */
+	public void setMenuIcon(String menuIcon) {
+		this.menuIcon = menuIcon;
+	}
+	/**
+	 * 获取：菜单icon
+	 */
+	public String getMenuIcon() {
+		return menuIcon;
+	}
+	/**
+	 * 设置：父级目录，0是顶级
+	 */
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+	/**
+	 * 获取：父级目录，0是顶级
+	 */
+	public Long getParentId() {
+		return parentId;
+	}
+	/**
+	 * 设置：菜单类型：  0：目录   1：菜单   2：按钮
+	 */
+	public void setType(Integer type) {
+		this.type = type;
+	}
+	/**
+	 * 获取：菜单类型：  0：目录   1：菜单   2：按钮
+	 */
+	public Integer getType() {
+		return type;
+	}
+}

@@ -1,6 +1,6 @@
-package com.wuwii.dao;
+package com.wuwii.module.sys.dao;
 
-import com.wuwii.model.UserDO;
+import com.wuwii.module.sys.model.UserDO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

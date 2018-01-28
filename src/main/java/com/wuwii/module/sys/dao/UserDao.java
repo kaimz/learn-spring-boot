@@ -1,6 +1,6 @@
-package com.wuwii.dao;
+package com.wuwii.module.sys.dao;
 
-import com.wuwii.model.UserDO;
+import com.wuwii.module.sys.model.UserDO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
