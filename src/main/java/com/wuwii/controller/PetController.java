@@ -6,6 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Zhang Kai
  * @version 1.0
@@ -34,8 +37,11 @@ public class PetController {
             @ApiResponse(code = 400, message = "请求参数错误")
     })
     @RequestMapping(path = "/index/{id}", method = RequestMethod.PUT)
-    public PetController index1(@PathVariable("id") String id, @RequestBody PetController pet) {
-        return pet;
+    public Map index1(@PathVariable("id") String id, @RequestBody PetController pet) {
+        Map<String, String> map = new HashMap<>();
+        map.put("kind", pet.getKind());
+        map.put("name", pet.getName());
+        return map;
     }
 
     public String getNo() {
