@@ -7,6 +7,8 @@ import com.wuwii.module.sys.entity.SysMenuEntity;
 import com.wuwii.module.sys.service.SysMenuService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,10 +49,10 @@ public class SysMenuController {
      */
     @RequestMapping("/info/{menuId}")
     @RequiresPermissions("sys:sysmenu:info")
-    public R info(@PathVariable("menuId") Long menuId) {
+    public ResponseEntity<SysMenuEntity> info(@PathVariable("menuId") Long menuId) {
         SysMenuEntity sysMenu = sysMenuService.queryObject(menuId);
 
-        return R.ok().put("sysMenu", sysMenu);
+        return new ResponseEntity<SysMenuEntity>(sysMenu, HttpStatus.OK);
     }
 
     /**

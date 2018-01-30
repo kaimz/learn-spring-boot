@@ -14,7 +14,7 @@ public class SysMenuEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //
-    private Long menuId;
+    private Long id;
 	//目录名称
 	private String menuName;
 	//菜单URL
@@ -32,14 +32,14 @@ public class SysMenuEntity implements Serializable {
      * 获取：
      */
     public Long getMenuId() {
-        return menuId;
+        return id;
     }
 
     /**
      * 设置：
      */
     public void setMenuId(Long menuId) {
-        this.menuId = menuId;
+        this.id = menuId;
     }
 	/**
 	 * 设置：目录名称
