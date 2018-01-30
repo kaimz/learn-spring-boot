@@ -1,19 +1,20 @@
-package io.renren.modules.generator.entity;
-
-import com.wuwii.module.sys.model.BaseDO;
+package com.wuwii.module.sys.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 
 /**
  * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2018-01-26 17:25:25
+ *
+ * @author KronChan
+ * @email k@wuwii.com
+ * @date 2018-01-30 16:47:32
  */
-public class SysMenuEntity extends BaseDO {
+public class SysMenuEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    //
+    private Long menuId;
 	//目录名称
 	private String menuName;
 	//菜单URL
@@ -26,6 +27,20 @@ public class SysMenuEntity extends BaseDO {
 	private Long parentId;
 	//菜单类型：  0：目录   1：菜单   2：按钮
 	private Integer type;
+
+    /**
+     * 获取：
+     */
+    public Long getMenuId() {
+        return menuId;
+    }
+
+    /**
+     * 设置：
+     */
+    public void setMenuId(Long menuId) {
+        this.menuId = menuId;
+    }
 	/**
 	 * 设置：目录名称
 	 */

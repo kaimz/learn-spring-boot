@@ -1,15 +1,14 @@
-package io.renren.modules.generator.entity;
+package com.wuwii.module.sys.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 
 /**
  * 
- * 
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2018-01-26 17:25:25
+ *
+ * @author KronChan
+ * @email k@wuwii.com
+ * @date 2018-01-30 16:47:32
  */
 public class SysRoleMenuEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

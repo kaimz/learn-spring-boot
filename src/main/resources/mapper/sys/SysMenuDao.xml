@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="io.renren.modules.generator.dao.SysMenuDao">
+<mapper namespace="com.wuwii.module.sys.dao.SysMenuDao">
 
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="io.renren.modules.generator.entity.SysMenuEntity" id="sysMenuMap">
+    <resultMap type="com.wuwii.module.sys.entity.SysMenuEntity" id="sysMenuMap">
         <result property="menuId" column="menu_id"/>
         <result property="menuName" column="menu_name"/>
         <result property="menuUrl" column="menu_url"/>
@@ -14,13 +14,13 @@
         <result property="type" column="type"/>
     </resultMap>
 
-    <select id="queryObject" resultType="io.renren.modules.generator.entity.SysMenuEntity">
+    <select id="queryObject" resultType="com.wuwii.module.sys.entity.SysMenuEntity">
         SELECT *
         FROM sys_menu
         WHERE menu_id = #{value}
     </select>
 
-    <select id="queryList" resultType="io.renren.modules.generator.entity.SysMenuEntity">
+    <select id="queryList" resultType="com.wuwii.module.sys.entity.SysMenuEntity">
         select * from sys_menu
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -40,7 +40,7 @@
         FROM sys_menu
     </select>
 
-    <insert id="save" parameterType="io.renren.modules.generator.entity.SysMenuEntity" useGeneratedKeys="true"
+    <insert id="save" parameterType="com.wuwii.module.sys.entity.SysMenuEntity" useGeneratedKeys="true"
             keyProperty="menuId">
         INSERT INTO sys_menu
         (
@@ -62,7 +62,7 @@
             )
     </insert>
 
-    <update id="update" parameterType="io.renren.modules.generator.entity.SysMenuEntity">
+    <update id="update" parameterType="com.wuwii.module.sys.entity.SysMenuEntity">
         update sys_menu
         <set>
             <if test="menuName != null">`menu_name` = #{menuName},</if>

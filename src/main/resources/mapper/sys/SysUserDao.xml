@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.wuwii.module.sys.dao.UserDao">
+<mapper namespace="com.wuwii.module.sys.dao.SysUserDao">
 
     <!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.wuwii.module.sys.model.UserDO" id="userMap">
+    <resultMap type="com.wuwii.module.sys.entity.SysUserEntity" id="sysUserMap">
         <result property="id" column="id"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
@@ -14,13 +14,13 @@
         <result property="createDate" column="create_date"/>
     </resultMap>
 
-    <select id="queryObject" resultType="com.wuwii.module.sys.model.UserDO">
+    <select id="queryObject" resultType="com.wuwii.module.sys.entity.SysUserEntity">
         SELECT *
         FROM sys_user
         WHERE id = #{value}
     </select>
 
-    <select id="queryList" resultType="com.wuwii.module.sys.model.UserDO">
+    <select id="queryList" resultType="com.wuwii.module.sys.entity.SysUserEntity">
         select * from sys_user
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -40,7 +40,8 @@
         FROM sys_user
     </select>
 
-    <insert id="save" parameterType="com.wuwii.module.sys.model.UserDO" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="com.wuwii.module.sys.entity.SysUserEntity" useGeneratedKeys="true"
+            keyProperty="id">
         INSERT INTO sys_user
         (
             `username`,
@@ -61,7 +62,7 @@
             )
     </insert>
 
-    <update id="update" parameterType="com.wuwii.module.sys.model.UserDO">
+    <update id="update" parameterType="com.wuwii.module.sys.entity.SysUserEntity">
         update sys_user
         <set>
             <if test="username != null">`username` = #{username},</if>

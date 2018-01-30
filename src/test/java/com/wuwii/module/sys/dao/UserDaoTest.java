@@ -1,6 +1,6 @@
 package com.wuwii.module.sys.dao;
 
-import com.wuwii.module.sys.model.SysUserDO;
+import com.wuwii.module.sys.entity.SysUserEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,13 +19,13 @@ import javax.annotation.Resource;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UserDaoTest {
     @Resource
-    private UserDao userDao;
+    private SysUserDao userDao;
 
     @Test
     @Transactional
     @Rollback(false)
     public void test() {
-        SysUserDO user = new SysUserDO();
+        SysUserEntity user = new SysUserEntity();
         user.setUsername("wuwii");
         user.setPassword("123");
         userDao.save(user);
