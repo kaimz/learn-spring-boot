@@ -1,5 +1,7 @@
 package com.wuwii.module.sys.entity;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,6 +17,7 @@ public class SysUserEntity implements Serializable {
     //主键
     private Long id;
     //用户名
+    @NotBlank(message = "用户名不能为空")
     private String username;
     //密码
     private String password;
