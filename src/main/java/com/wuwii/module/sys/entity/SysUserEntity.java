@@ -1,5 +1,7 @@
 package com.wuwii.module.sys.entity;
 
+import com.wuwii.common.validator.group.AddGroup;
+import com.wuwii.common.validator.group.UpdateGroup;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
@@ -17,13 +19,13 @@ public class SysUserEntity implements Serializable {
     //主键
     private Long id;
     //用户名
-    @NotBlank(message = "用户名不能为空")
+    @NotBlank(message = "用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
     private String username;
     //密码
     private String password;
     //手机号
     private String mobile;
-    //邮件
+    //邮箱
     private String email;
     //创建者
     private Long createUserId;

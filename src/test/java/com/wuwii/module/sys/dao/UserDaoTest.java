@@ -29,5 +29,6 @@ public class UserDaoTest {
         user.setUsername("wuwii");
         user.setPassword("123");
         userDao.save(user);
+        //Assert.assertThat("123".equals(us));
     }
 }
