@@ -5,7 +5,7 @@
 
     <!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="com.wuwii.module.sys.entity.SysMenuEntity" id="sysMenuMap">
-        <result property="menuId" column="menu_id"/>
+        <result property="id" column="id"/>
         <result property="menuName" column="menu_name"/>
         <result property="menuUrl" column="menu_url"/>
         <result property="perms" column="perms"/>
@@ -17,7 +17,7 @@
     <select id="queryObject" resultType="com.wuwii.module.sys.entity.SysMenuEntity">
         SELECT *
         FROM sys_menu
-        WHERE menu_id = #{value}
+        WHERE id = #{value}
     </select>
 
     <select id="queryList" resultType="com.wuwii.module.sys.entity.SysMenuEntity">
@@ -27,7 +27,7 @@
                 order by ${sidx} ${order}
             </when>
             <otherwise>
-                order by menu_id desc
+                order by id desc
             </otherwise>
         </choose>
         <if test="offset != null and limit != null">
@@ -41,25 +41,25 @@
     </select>
 
     <insert id="save" parameterType="com.wuwii.module.sys.entity.SysMenuEntity" useGeneratedKeys="true"
-            keyProperty="menuId">
+            keyProperty="id">
         INSERT INTO sys_menu
         (
-            `menu_name`,
-            `menu_url`,
-            `perms`,
-            `menu_icon`,
-            `parent_id`,
-            `type`
+        `menu_name`,
+        `menu_url`,
+        `perms`,
+        `menu_icon`,
+        `parent_id`,
+        `type`
         )
         VALUES
-            (
-                #{menuName},
-                #{menuUrl},
-                #{perms},
-                #{menuIcon},
-                #{parentId},
-                #{type}
-            )
+        (
+        #{menuName},
+        #{menuUrl},
+        #{perms},
+        #{menuIcon},
+        #{parentId},
+        #{type}
+        )
     </insert>
 
     <update id="update" parameterType="com.wuwii.module.sys.entity.SysMenuEntity">
@@ -72,18 +72,18 @@
             <if test="parentId != null">`parent_id` = #{parentId},</if>
             <if test="type != null">`type` = #{type}</if>
         </set>
-        where menu_id = #{menuId}
+        where id = #{id}
     </update>
 
     <delete id="delete">
         DELETE FROM sys_menu
-        WHERE menu_id = #{value}
+        WHERE id = #{value}
     </delete>
 
     <delete id="deleteBatch">
-        delete from sys_menu where menu_id in
-        <foreach item="menuId" collection="array" open="(" separator="," close=")">
-            #{menuId}
+        delete from sys_menu where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
         </foreach>
     </delete>
 
