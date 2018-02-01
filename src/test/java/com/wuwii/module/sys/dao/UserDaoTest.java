@@ -25,12 +25,11 @@ public class UserDaoTest {
     @Test
     @Transactional
     @Rollback(false)
-    public void testSave() {
+    public void test() {
         SysUserEntity user = new SysUserEntity();
-        user.setUsername("124");
+        user.setUsername("wuwii");
         user.setPassword("123");
         userDao.save(user);
-        //Assert.assertEquals(user.getUsername(), userDao.query(user).get(0).getUsername());
         //Assert.assertThat("123".equals(us));
     }
 }
