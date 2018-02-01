@@ -23,9 +23,8 @@ mybatis:
     configuration:
         map-underscore-to-camel-case: true
 
-com:
-  wuwii:
-    petcontroller:
-      kind: cat
-      name: Tom
-      no: ${random.uuid}
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

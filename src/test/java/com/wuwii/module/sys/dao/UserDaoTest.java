@@ -27,7 +27,7 @@ public class UserDaoTest {
     @Rollback(false)
     public void testSave() {
         SysUserEntity user = new SysUserEntity();
-        user.setUsername("wuwii");
+        user.setUsername("124");
         user.setPassword("123");
         userDao.save(user);
         Assert.assertEquals(user.getUsername(), userDao.query(user).get(0).getUsername());

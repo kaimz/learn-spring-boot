@@ -1,19 +1,28 @@
 package com.wuwii.module.sys.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.wuwii.module.sys.dao.SysUserDao;
 import com.wuwii.module.sys.entity.SysUserEntity;
 import com.wuwii.module.sys.service.SysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
 
 @Service("sysUserService")
 public class SysUserServiceImpl implements SysUserService {
-    @Autowired
+    @Resource
     private SysUserDao sysUserDao;
+
+    @Override
+    public Page<SysUserEntity> query(SysUserEntity user) {
+        Page page = PageHelper.startPage(1, 2);
+        sysUserDao.query(user);
+        return page;
+    }
 
     @Override
     public SysUserEntity queryObject(Long id) {

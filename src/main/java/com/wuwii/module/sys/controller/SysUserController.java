@@ -1,5 +1,6 @@
 package com.wuwii.module.sys.controller;
 
+import com.github.pagehelper.Page;
 import com.wuwii.common.util.PageUtils;
 import com.wuwii.common.util.Query;
 import com.wuwii.common.util.R;
@@ -7,6 +8,8 @@ import com.wuwii.module.sys.entity.SysUserEntity;
 import com.wuwii.module.sys.service.SysUserService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +26,11 @@ import java.util.Map;
 public class SysUserController {
     @Autowired
     private SysUserService sysUserService;
+
+    @GetMapping()
+    public ResponseEntity<Page<SysUserEntity>> query() {
+        return new ResponseEntity<>(sysUserService.query(new SysUserEntity()), HttpStatus.OK);
+    }
 
     /**
      * 列表

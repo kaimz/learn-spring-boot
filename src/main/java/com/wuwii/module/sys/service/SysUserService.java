@@ -1,5 +1,6 @@
 package com.wuwii.module.sys.service;
 
+import com.github.pagehelper.Page;
 import com.wuwii.module.sys.entity.SysUserEntity;
 
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.Map;
  * @date 2018-01-30 16:47:32
  */
 public interface SysUserService {
+
+    Page query(SysUserEntity user);
 
     SysUserEntity queryObject(Long id);
 
