@@ -20,6 +20,19 @@
         WHERE id = #{value}
     </select>
 
+    <select id="query" resultType="com.wuwii.module.sys.entity.SysUserEntity">
+        SELECT *
+        FROM sys_user
+        <where>
+            <if test="username != null">and `username` = #{username}</if>
+            <if test="password != null">and `password` = #{password}</if>
+            <if test="mobile != null">and `mobile` = #{mobile}</if>
+            <if test="email != null">and `email` = #{email}</if>
+            <if test="createUserId != null">and `create_user_id` = #{createUserId}</if>
+            <if test="createDate != null">and `create_date` = #{createDate}</if>
+        </where>
+    </select>
+
     <select id="queryList" resultType="com.wuwii.module.sys.entity.SysUserEntity">
         select * from sys_user
         <choose>

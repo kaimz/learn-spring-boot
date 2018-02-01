@@ -8,13 +8,10 @@ import javax.validation.Validator;
 import java.util.Set;
 
 /**
- * hibernate-validator校验工具类
- * <p>
- * 参考文档：http://docs.jboss.org/hibernate/validator/5.4/reference/en-US/html_single/
- *
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-03-15 10:50
+ * hibernate-validator校验工具类，校验不通过抛出自定义异常
+ * @author KronChan
+ * @version 1.0
+ * @since <pre>2018/2/1 8:34</pre>
  */
 public class ValidatorUtils {
     private static Validator validator;
