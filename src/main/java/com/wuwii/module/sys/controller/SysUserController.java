@@ -5,13 +5,14 @@ import com.github.pagehelper.PageInfo;
 import com.wuwii.module.sys.entity.SysUserEntity;
 import com.wuwii.module.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.OK;
 
 
 /**
@@ -27,17 +28,17 @@ public class SysUserController {
 
     @GetMapping()
     public ResponseEntity<List<SysUserEntity>> query() {
-        return new ResponseEntity<>(sysUserService.query(new SysUserEntity()), HttpStatus.OK);
+        return new ResponseEntity<>(sysUserService.query(new SysUserEntity()), OK);
     }
 
     @GetMapping("/page")
     public ResponseEntity<Page<SysUserEntity>> queryByPage() {
-        return new ResponseEntity<>(sysUserService.queryByPage(new SysUserEntity()), HttpStatus.OK);
+        return new ResponseEntity<>(sysUserService.queryByPage(new SysUserEntity()), OK);
     }
 
     @GetMapping("/pageinfo")
     public ResponseEntity<PageInfo<SysUserEntity>> queryByPageInfo() {
-        return new ResponseEntity<>(sysUserService.queryByPageInfo(new SysUserEntity()), HttpStatus.OK);
+        return new ResponseEntity<>(sysUserService.queryByPageInfo(new SysUserEntity()), OK);
     }
 
     @PostMapping("/valid")
@@ -45,7 +46,7 @@ public class SysUserController {
         if (result.hasErrors()) {
             return ResponseEntity.status(500).body("校验失败");
         }
-        return ResponseEntity.status(200).body("校验成功");
+        return ResponseEntity.status(OK).body("校验成功");
     }
 
 }
