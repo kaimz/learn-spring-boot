@@ -2,6 +2,7 @@ package com.wuwii.module.sys.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.wuwii.module.sys.dao.SysUserDao;
 import com.wuwii.module.sys.entity.SysUserEntity;
 import com.wuwii.module.sys.service.SysUserService;
@@ -18,10 +19,19 @@ public class SysUserServiceImpl implements SysUserService {
     private SysUserDao sysUserDao;
 
     @Override
-    public Page<SysUserEntity> query(SysUserEntity user) {
-        Page page = PageHelper.startPage(1, 2);
-        sysUserDao.query(user);
-        return page;
+    public List<SysUserEntity> query(SysUserEntity user) {
+        PageHelper.startPage(1, 2);
+        return sysUserDao.query(user);
+    }
+
+    @Override
+    public Page queryByPage(SysUserEntity user) {
+        return PageHelper.startPage(1, 2).doSelectPage(() -> sysUserDao.query(user));
+    }
+
+    @Override
+    public PageInfo queryByPageInfo(SysUserEntity user) {
+        return PageHelper.startPage(1, 2).doSelectPageInfo(() -> sysUserDao.query(user));
     }
 
     @Override

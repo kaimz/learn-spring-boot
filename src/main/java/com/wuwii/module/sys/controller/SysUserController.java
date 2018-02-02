@@ -1,19 +1,17 @@
 package com.wuwii.module.sys.controller;
 
 import com.github.pagehelper.Page;
-import com.wuwii.common.util.PageUtils;
-import com.wuwii.common.util.Query;
-import com.wuwii.common.util.R;
+import com.github.pagehelper.PageInfo;
 import com.wuwii.module.sys.entity.SysUserEntity;
 import com.wuwii.module.sys.service.SysUserService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -28,70 +26,26 @@ public class SysUserController {
     private SysUserService sysUserService;
 
     @GetMapping()
-    public ResponseEntity<Page<SysUserEntity>> query() {
+    public ResponseEntity<List<SysUserEntity>> query() {
         return new ResponseEntity<>(sysUserService.query(new SysUserEntity()), HttpStatus.OK);
     }
 
-    /**
-     * 列表
-     */
-    @RequestMapping("/list")
-    @RequiresPermissions("sys:sysuser:list")
-    public R list(@RequestParam Map<String, Object> params) {
-        //查询列表数据
-        Query query = new Query(params);
-
-        List<SysUserEntity> sysUserList = sysUserService.queryList(query);
-        int total = sysUserService.queryTotal(query);
-
-        PageUtils pageUtil = new PageUtils(sysUserList, total, query.getLimit(), query.getPage());
-
-        return R.ok().put("page", pageUtil);
+    @GetMapping("/page")
+    public ResponseEntity<Page<SysUserEntity>> queryByPage() {
+        return new ResponseEntity<>(sysUserService.queryByPage(new SysUserEntity()), HttpStatus.OK);
     }
 
-
-    /**
-     * 信息
-     */
-    @RequestMapping("/info/{id}")
-    @RequiresPermissions("sys:sysuser:info")
-    public R info(@PathVariable("id") Long id) {
-        SysUserEntity sysUser = sysUserService.queryObject(id);
-
-        return R.ok().put("sysUser", sysUser);
+    @GetMapping("/pageinfo")
+    public ResponseEntity<PageInfo<SysUserEntity>> queryByPageInfo() {
+        return new ResponseEntity<>(sysUserService.queryByPageInfo(new SysUserEntity()), HttpStatus.OK);
     }
 
-    /**
-     * 保存
-     */
-    @RequestMapping("/save")
-    @RequiresPermissions("sys:sysuser:save")
-    public R save(@RequestBody SysUserEntity sysUser) {
-        sysUserService.save(sysUser);
-
-        return R.ok();
-    }
-
-    /**
-     * 修改
-     */
-    @RequestMapping("/update")
-    @RequiresPermissions("sys:sysuser:update")
-    public R update(@RequestBody SysUserEntity sysUser) {
-        sysUserService.update(sysUser);
-
-        return R.ok();
-    }
-
-    /**
-     * 删除
-     */
-    @RequestMapping("/delete")
-    @RequiresPermissions("sys:sysuser:delete")
-    public R delete(@RequestBody Long[] ids) {
-        sysUserService.deleteBatch(ids);
-
-        return R.ok();
+    @PostMapping("/valid")
+    public ResponseEntity<String> valid(@Validated @RequestBody SysUserEntity user, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseEntity.status(500).body("校验失败");
+        }
+        return ResponseEntity.status(200).body("校验成功");
     }
 
 }
