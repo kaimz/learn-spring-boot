@@ -1,5 +1,6 @@
 package com.wuwii.module.sys.entity;
 
+import com.wuwii.common.validator.NotHaveSB;
 import com.wuwii.common.validator.group.AddGroup;
 import com.wuwii.common.validator.group.UpdateGroup;
 import org.hibernate.validator.constraints.Email;
@@ -24,7 +25,8 @@ public class SysUserEntity implements Serializable {
     @NotBlank(message = "用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
     private String username;
     //密码
-    @NotBlank(message = "密码不能为空", groups = AddGroup.class)
+    //@NotBlank(message = "密码不能为空", groups = AddGroup.class)
+    @NotHaveSB(message = "123123")
     private String password;
     //手机号
     @Pattern(regexp = "^1([345789])\\d{9}$", message = "手机号码格式错误")

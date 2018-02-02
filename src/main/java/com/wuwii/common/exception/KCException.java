@@ -96,4 +96,8 @@ public class KCException extends RuntimeException {
     public KCException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
+
+    public int getCode() {
+        return this.code;
+    }
 }

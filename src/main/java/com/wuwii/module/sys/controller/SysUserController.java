@@ -2,6 +2,7 @@ package com.wuwii.module.sys.controller;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import com.wuwii.common.validator.ValidatorUtils;
 import com.wuwii.module.sys.entity.SysUserEntity;
 import com.wuwii.module.sys.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.OK;
 
 
@@ -44,8 +46,14 @@ public class SysUserController {
     @PostMapping("/valid")
     public ResponseEntity<String> valid(@Validated @RequestBody SysUserEntity user, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseEntity.status(500).body("校验失败");
+            return ResponseEntity.status(BAD_REQUEST).body("校验失败");
         }
+        return ResponseEntity.status(OK).body("校验成功");
+    }
+
+    @PostMapping("/valid1")
+    public ResponseEntity<String> customValid(@RequestBody SysUserEntity user) {
+        ValidatorUtils.validateEntity(user);
         return ResponseEntity.status(OK).body("校验成功");
     }
 
