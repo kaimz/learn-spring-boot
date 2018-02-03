@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 
 /**
@@ -55,6 +54,12 @@ public class SysUserController {
     public ResponseEntity<String> customValid(@RequestBody SysUserEntity user) {
         ValidatorUtils.validateEntity(user);
         return ResponseEntity.status(OK).body("校验成功");
+    }
+
+    @PostMapping()
+    public ResponseEntity insert(@RequestBody SysUserEntity user) {
+        sysUserService.save(user);
+        return ResponseEntity.status(CREATED).body("新增成功");
     }
 
 }

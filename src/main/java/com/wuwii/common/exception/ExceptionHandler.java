@@ -37,13 +37,13 @@ public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<String> handleDuplicateKeyException(DuplicateKeyException e) {
         LOGGER.error(e.getMessage(), e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("数据库中已存在该记录");
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("数据库中已存在该记录");
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(AuthorizationException.class)
     public ResponseEntity<String> handleAuthorizationException(AuthorizationException e) {
         LOGGER.error(e.getMessage(), e);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("没有权限，请联系管理员授权");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("没有权限，请联系管理员授权");
     }
 
     /**
