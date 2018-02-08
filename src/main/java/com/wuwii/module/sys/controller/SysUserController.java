@@ -22,7 +22,7 @@ import static org.springframework.http.HttpStatus.*;
  * @date 2018-01-30 16:47:32
  */
 @RestController
-@RequestMapping("/sys/sysuser")
+@RequestMapping("/sys/user")
 public class SysUserController {
     @Autowired
     private SysUserService sysUserService;
