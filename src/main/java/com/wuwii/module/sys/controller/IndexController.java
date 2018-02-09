@@ -16,6 +16,11 @@ public class IndexController {
         return "index.html";
     }
 
+    @GetMapping("/logout")
+    public String logout() {
+        return "login.html";
+    }
+
     /*@GetMapping("/{html:((?!\\.html$).)*$}")
     public String html(@PathVariable String html) {
         return html;

@@ -4,7 +4,7 @@ import com.wuwii.common.exception.KCException;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * 数据校验，抛出自定义异常
+ * 数据校验，抛出自定义异常返回给客户端
  *
  * @author Zhang Kai
  * @version 1.0

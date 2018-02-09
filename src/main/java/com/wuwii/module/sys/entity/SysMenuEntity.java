@@ -112,4 +112,29 @@ public class SysMenuEntity implements Serializable {
 	public Integer getType() {
 		return type;
 	}
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "SysMenuEntity{" +
+                "id=" + id +
+                ", menuName='" + menuName + '\'' +
+                ", menuUrl='" + menuUrl + '\'' +
+                ", perms='" + perms + '\'' +
+                ", menuIcon='" + menuIcon + '\'' +
+                ", parentId=" + parentId +
+                ", type=" + type +
+                '}';
+    }
 }
