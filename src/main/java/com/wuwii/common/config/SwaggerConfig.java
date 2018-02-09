@@ -1,4 +1,4 @@
-package com.wuwii;
+package com.wuwii.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -46,7 +46,6 @@ public class SwaggerConfig {
                 .title("Spring Boot中使用Swagger2构建RESTful APIs")
                 .description("rest api 文档构建利器")
                 .termsOfServiceUrl("https://blog.wuwii.com/")
-                .contact("KronChan")
                 .version("1.0")
                 .build();
     }

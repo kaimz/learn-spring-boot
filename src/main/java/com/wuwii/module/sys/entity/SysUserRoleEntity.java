@@ -56,4 +56,17 @@ public class SysUserRoleEntity implements Serializable {
 	public Long getRoleId() {
 		return roleId;
 	}
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "SysUserRoleEntity{" +
+				"id=" + id +
+				", userId=" + userId +
+				", roleId=" + roleId +
+				'}';
+	}
 }

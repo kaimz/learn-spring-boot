@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 
 @Service("sysUserService")
@@ -37,16 +36,6 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public SysUserEntity queryObject(Long id) {
         return sysUserDao.queryObject(id);
-    }
-
-    @Override
-    public List<SysUserEntity> queryList(Map<String, Object> map) {
-        return sysUserDao.queryList(map);
-    }
-
-    @Override
-    public int queryTotal(Map<String, Object> map) {
-        return sysUserDao.queryTotal(map);
     }
 
     @Override

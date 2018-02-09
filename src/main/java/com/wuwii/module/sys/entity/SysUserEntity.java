@@ -1,8 +1,8 @@
 package com.wuwii.module.sys.entity;
 
-import com.wuwii.common.validator.NotHaveSB;
 import com.wuwii.common.validator.group.AddGroup;
 import com.wuwii.common.validator.group.UpdateGroup;
+import com.wuwii.module.sys.common.SysConstant;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -25,8 +25,7 @@ public class SysUserEntity implements Serializable {
     @NotBlank(message = "用户名不能为空", groups = {AddGroup.class, UpdateGroup.class})
     private String username;
     //密码
-    //@NotBlank(message = "密码不能为空", groups = AddGroup.class)
-    @NotHaveSB(message = "123123")
+    @NotBlank(message = "密码不能为空", groups = AddGroup.class)
     private String password;
     //手机号
     @Pattern(regexp = "^1([345789])\\d{9}$", message = "手机号码格式错误")
@@ -39,7 +38,20 @@ public class SysUserEntity implements Serializable {
     private Long createUserId;
     //创建时间
     private Date createDate;
+    /**
+     * 密码加盐
+     */
+    private String salt;
 
+    /**
+     * 账号状态
+     */
+    private SysConstant.SysUserStatus status;
+
+    /**
+     * 账号类型（管理员还是用户）
+     */
+    private SysConstant.SysUserType type;
     /**
      * 获取：主键
      */
@@ -136,5 +148,49 @@ public class SysUserEntity implements Serializable {
      */
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public SysConstant.SysUserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(SysConstant.SysUserStatus status) {
+        this.status = status;
+    }
+
+    public SysConstant.SysUserType getType() {
+        return type;
+    }
+
+    public void setType(SysConstant.SysUserType type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "SysUserEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", email='" + email + '\'' +
+                ", createUserId=" + createUserId +
+                ", createDate=" + createDate +
+                ", salt='" + salt + '\'' +
+                ", status=" + status +
+                ", type=" + type +
+                '}';
     }
 }

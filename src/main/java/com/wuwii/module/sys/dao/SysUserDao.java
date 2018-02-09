@@ -19,4 +19,6 @@ public interface SysUserDao extends BaseDao<SysUserEntity> {
      * @return 符合条件列表
      */
     List<SysUserEntity> query(SysUserEntity user);
+
+    List<String> queryPermsById(Long id);
 }

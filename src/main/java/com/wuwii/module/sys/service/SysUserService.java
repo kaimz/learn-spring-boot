@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.wuwii.module.sys.entity.SysUserEntity;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author KronChan
@@ -21,10 +20,6 @@ public interface SysUserService {
     PageInfo queryByPageInfo(SysUserEntity user);
 
     SysUserEntity queryObject(Long id);
-
-    List<SysUserEntity> queryList(Map<String, Object> map);
-
-    int queryTotal(Map<String, Object> map);
 
     void save(SysUserEntity sysUser);
 

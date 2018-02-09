@@ -3,31 +3,19 @@ package com.wuwii.module.sys.service.impl;
 import com.wuwii.module.sys.dao.SysRoleMenuDao;
 import com.wuwii.module.sys.entity.SysRoleMenuEntity;
 import com.wuwii.module.sys.service.SysRoleMenuService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import javax.annotation.Resource;
 
 
-@Service("sysRoleMenuService")
+@Service
 public class SysRoleMenuServiceImpl implements SysRoleMenuService {
-    @Autowired
+    @Resource
     private SysRoleMenuDao sysRoleMenuDao;
 
     @Override
     public SysRoleMenuEntity queryObject(Long id) {
         return sysRoleMenuDao.queryObject(id);
-    }
-
-    @Override
-    public List<SysRoleMenuEntity> queryList(Map<String, Object> map) {
-        return sysRoleMenuDao.queryList(map);
-    }
-
-    @Override
-    public int queryTotal(Map<String, Object> map) {
-        return sysRoleMenuDao.queryTotal(map);
     }
 
     @Override

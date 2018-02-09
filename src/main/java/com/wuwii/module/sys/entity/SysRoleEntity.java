@@ -85,4 +85,19 @@ public class SysRoleEntity implements Serializable {
 	public String getRemark() {
 		return remark;
 	}
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    @Override
+    public String toString() {
+        return "SysRoleEntity{" +
+                "id=" + id +
+                ", roleName='" + roleName + '\'' +
+                ", createUserId=" + createUserId +
+                ", createTime=" + createTime +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 }

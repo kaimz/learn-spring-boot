@@ -27,6 +27,7 @@ mybatis:
     mapperLocations: classpath:mapper/**/*.xml
     configuration:
         map-underscore-to-camel-case: true
+    typeHandlersPackage: com.wuwii.common.util
 
 pagehelper:
   helper-dialect: mysql

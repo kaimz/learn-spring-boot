@@ -3,31 +3,19 @@ package com.wuwii.module.sys.service.impl;
 import com.wuwii.module.sys.dao.SysRoleDao;
 import com.wuwii.module.sys.entity.SysRoleEntity;
 import com.wuwii.module.sys.service.SysRoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import javax.annotation.Resource;
 
 
-@Service("sysRoleService")
+@Service
 public class SysRoleServiceImpl implements SysRoleService {
-    @Autowired
+    @Resource
     private SysRoleDao sysRoleDao;
 
     @Override
     public SysRoleEntity queryObject(Long id) {
         return sysRoleDao.queryObject(id);
-    }
-
-    @Override
-    public List<SysRoleEntity> queryList(Map<String, Object> map) {
-        return sysRoleDao.queryList(map);
-    }
-
-    @Override
-    public int queryTotal(Map<String, Object> map) {
-        return sysRoleDao.queryTotal(map);
     }
 
     @Override

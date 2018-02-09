@@ -56,4 +56,13 @@ public class SysRoleMenuEntity implements Serializable {
 	public Long getMenuId() {
 		return menuId;
 	}
+
+	@Override
+	public String toString() {
+		return "SysRoleMenuEntity{" +
+				"id=" + id +
+				", roleId=" + roleId +
+				", menuId=" + menuId +
+				'}';
+	}
 }
