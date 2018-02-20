@@ -28,9 +28,6 @@ public class SysMenuEntity implements Serializable {
 	//菜单类型：  0：目录   1：菜单   2：按钮
 	private Integer type;
 
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
-	}
 
 	public Long getId() {
 		return id;
@@ -115,14 +112,6 @@ public class SysMenuEntity implements Serializable {
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     @Override
