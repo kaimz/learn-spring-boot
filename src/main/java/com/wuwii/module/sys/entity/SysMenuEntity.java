@@ -28,19 +28,18 @@ public class SysMenuEntity implements Serializable {
 	//菜单类型：  0：目录   1：菜单   2：按钮
 	private Integer type;
 
-    /**
-     * 获取：
-     */
-    public Long getMenuId() {
-        return menuId;
-    }
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
 
-    /**
-     * 设置：
-     */
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
-    }
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	/**
 	 * 设置：目录名称
 	 */
