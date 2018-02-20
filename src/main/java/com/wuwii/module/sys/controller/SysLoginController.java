@@ -5,7 +5,6 @@ import com.google.code.kaptcha.Producer;
 import com.wuwii.common.exception.KCException;
 import com.wuwii.module.sys.common.util.ShiroUtils;
 import com.wuwii.module.sys.common.util.SysConstant;
-import com.wuwii.module.sys.entity.SysUserEntity;
 import com.wuwii.module.sys.form.SysUserLoginForm;
 import com.wuwii.module.sys.service.SysUserService;
 import com.wuwii.module.sys.service.SysUserTokenService;
@@ -13,7 +12,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -72,20 +70,15 @@ public class SysLoginController extends BaseController {
         if (!userForm.getCaptcha().equalsIgnoreCase(kaptcha)) {
             throw new KCException("验证码不正确！");
         }
-        UsernamePasswordToken token1 = new UsernamePasswordToken(userForm.getUsername(), userForm.getPassword());
+        UsernamePasswordToken token = new UsernamePasswordToken(userForm.getUsername(), userForm.getPassword());
         Subject currentUser = SecurityUtils.getSubject();
-        currentUser.login(token1);
-        SysUserEntity user = sysUserService.queryByUsername(userForm.getUsername());
-        //账号不存在、密码错误
-        if (user == null || !user.getPassword().equals(new Sha256Hash(userForm.getPassword(), user.getSalt()).toHex())) {
-            throw new KCException("账号或密码不正确");
-        }
+        currentUser.login(token);
+
         //账号锁定
-        if (user.getStatus() == SysConstant.SysUserStatus.LOCK) {
+        if (getUser().getStatus() == SysConstant.SysUserStatus.LOCK) {
             throw new KCException("账号已被锁定,请联系管理员");
         }
-        String token = sysUserTokenService.createToken(user.getId());
-        return ResponseEntity.status(HttpStatus.OK).body(token);
+        return ResponseEntity.status(HttpStatus.OK).body("登陆成功！");
     }
     /*@RequestMapping("/login")
     public String login(HttpServletRequest request) {

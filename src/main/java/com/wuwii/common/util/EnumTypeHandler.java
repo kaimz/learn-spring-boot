@@ -1,6 +1,6 @@
 package com.wuwii.common.util;
 
-import com.wuwii.module.sys.common.SysConstant;
+import com.wuwii.module.sys.common.util.SysConstant;
 import org.apache.ibatis.type.MappedTypes;
 
 /**

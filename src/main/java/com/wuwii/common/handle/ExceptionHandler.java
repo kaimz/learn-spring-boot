@@ -10,6 +10,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.stream.Collectors;
@@ -83,6 +84,12 @@ public class ExceptionHandler {
     public ResponseEntity<String> handleAuthorizationException(AuthorizationException e) {
         LOGGER.debug(e.getMessage(), e);
         return ResponseEntity.status(UNAUTHORIZED).body("没有权限，请联系管理员授权");
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<String> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        LOGGER.debug(e.getMessage(), e);
+        return ResponseEntity.status(BAD_REQUEST).body("请求错误！");
     }
 
     /**

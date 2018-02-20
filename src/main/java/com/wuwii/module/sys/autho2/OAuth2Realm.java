@@ -1,7 +1,6 @@
 package com.wuwii.module.sys.autho2;
 
 import com.wuwii.common.exception.KCException;
-import com.wuwii.module.sys.common.util.SysConstant;
 import com.wuwii.module.sys.entity.SysUserEntity;
 import com.wuwii.module.sys.service.ShiroService;
 import com.wuwii.module.sys.service.SysUserService;
@@ -49,11 +48,11 @@ public class OAuth2Realm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        SysUserEntity user = (SysUserEntity) principals.getPrimaryPrincipal();
-        Long userId = user.getId();
+        SysUserEntity user = (SysUserEntity) (principals.getPrimaryPrincipal());
+        ;
 
         //用户权限列表
-        Set<String> permsSet = shiroService.getUserPermissions(userId);
+        Set<String> permsSet = shiroService.getUserPermissions(user.getId());
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(permsSet);
@@ -74,11 +73,21 @@ public class OAuth2Realm extends AuthorizingRealm {
         if (user == null) {
             throw new KCException("账号或密码不正确");
         }
-        //账号锁定
-        if (user.getStatus() == SysConstant.SysUserStatus.LOCK) {
-            throw new KCException("账号已被锁定,请联系管理员");
-        }
-        // 交给 shiro 自己去验证，如果进行加密，可以查阅
-        return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
+
+        // 交给 shiro 自己去验证，
+        // 明文验证
+        return new SimpleAuthenticationInfo(
+                user, // 存入凭证的信息，登陆成功后可以使用 SecurityUtils.getSubject().getPrincipal();在任何地方使用它
+                user.getPassword(),
+                getName());
+
+        // 加密的方式
+        // 交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现
+        /*return new SimpleAuthenticationInfo(
+                user,
+                user.getPassword(),
+                ByteSource.Util.bytes(user.getSalt()), // 加盐，可以注册凭证匹配器 HashedCredentialsMatcher 告诉它怎么加密的
+                getName());*/
+
     }
 }

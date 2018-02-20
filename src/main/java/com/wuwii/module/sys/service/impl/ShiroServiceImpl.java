@@ -49,9 +49,11 @@ public class ShiroServiceImpl implements ShiroService {
             permsList = sysUserDao.queryPermsById(userId);
         }
         Set<String> permSet = new HashSet<>();
-        permsList.parallelStream().forEach(p -> {
-            permSet.addAll(Arrays.asList(p.split(",")));
-        });
+        for (String p : permSet) {
+            if (p != null) {
+                permSet.addAll(Arrays.asList(p.split(",")));
+            }
+        }
         return permSet;
     }
 

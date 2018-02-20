@@ -1,6 +1,5 @@
 package com.wuwii.common.config;
 
-import com.wuwii.module.sys.autho2.OAuth2Filter;
 import com.wuwii.module.sys.autho2.OAuth2Realm;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -13,8 +12,6 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.servlet.Filter;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -59,10 +56,10 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
 
-        //oauth过滤
-        Map<String, Filter> filters = new HashMap<>();
+        //自定义一个oauth2拦截器，不设置就是使用默认的拦截器
+        /*Map<String, Filter> filters = new HashMap<>();
         filters.put("oauth2", new OAuth2Filter());
-        shiroFilter.setFilters(filters);
+        shiroFilter.setFilters(filters);*/
         //拦截器
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
@@ -73,7 +70,9 @@ public class ShiroConfig {
         filterMap.put("/sys/captcha.jpg", "anon");
         // 设置系统模块下访问需要权限
         filterMap.put("/sys/login", "anon");
-        filterMap.put("/sys/**", "oauth2");
+        // 自定义的拦截
+        //filterMap.put("/sys/**", "oauth2");
+        filterMap.put("/sys/**", "authc");
         // 登陆的 url
         shiroFilter.setLoginUrl("/sys/login");
         // 登陆成功跳转的 url
@@ -87,13 +86,20 @@ public class ShiroConfig {
         return shiroFilter;
     }
 
+    /**
+     * Shiro生命周期处理器
+     *
+     * @return
+     */
     @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
 
     /**
-     * Shiro生命周期处理器
+     * 开启Shiro的注解，
+     * (如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,
+     * 并在必要时进行安全逻辑验证 * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和AuthorizationAttributeSourceAdvisor)即可实现此功能
      *
      * @return
      */
@@ -107,7 +113,7 @@ public class ShiroConfig {
     /**
      * 开启 shiro aop注解支持.
      *
-     * @param securityManager 安全管理器
+     * @param securityManager
      * @return
      */
     @Bean
@@ -122,7 +128,7 @@ public class ShiroConfig {
      * （由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了
      * 所以我们需要修改下doGetAuthenticationInfo中的代码;
      * ）
-     *
+     *  <b>需要在身份认证中添加 realm.setCredentialsMatcher(hashedCredentialsMatcher())</b>
      * @return
      */
     /*@Bean

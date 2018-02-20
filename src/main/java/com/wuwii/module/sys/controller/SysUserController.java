@@ -8,6 +8,7 @@ import com.wuwii.module.sys.entity.SysUserEntity;
 import com.wuwii.module.sys.form.SysUserAddForm;
 import com.wuwii.module.sys.service.SysUserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.BeanUtils;
@@ -34,8 +35,11 @@ public class SysUserController extends BaseController {
     @Autowired
     private SysUserService sysUserService;
 
-    @GetMapping()
+
     @ApiOperation("用于测试，查询")
+    @ApiImplicitParam(name = "string", value = "id", dataType = "string")
+    @RequiresPermissions("sys:user:list1")
+    @GetMapping()
     public ResponseEntity<List<SysUserEntity>> query(@CustomValid String string) {
         return new ResponseEntity<>(sysUserService.query(new SysUserEntity()), OK);
     }
@@ -69,9 +73,12 @@ public class SysUserController extends BaseController {
         return ResponseEntity.status(OK).body("校验成功");
     }
 
-    @PostMapping()
+
+    //@RequiresPermissions("sys:user:add")
     @ApiOperation("新增")
-    public ResponseEntity insert(@Validated SysUserAddForm user) {
+    @ApiImplicitParam(name = "user", value = "用户信息", required = true, dataType = "SysUserAddForm", paramType = "body")
+    @PostMapping()
+    public ResponseEntity insert(@Validated @RequestBody SysUserAddForm user) {
         SysUserEntity userEntity = new SysUserEntity();
         BeanUtils.copyProperties(user, userEntity);
         userEntity.setCreateUserId(getUserId());
