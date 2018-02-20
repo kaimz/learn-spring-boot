@@ -1,31 +1,37 @@
-package com.wuwii.common.util;
+package com.wuwii.common.handle;
 
+import com.wuwii.common.util.BaseEnum;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * http://blog.csdn.net/fighterandknight/article/details/51520595
- * 解决 Mybatis 中枚举的问题
+ * 解决 Mybatis 中枚举的问题，
+ * 获取 ResultSet 的值都是获取字符串的，然后比较字符串，以便通用。
  *
  * @author Zhang Kai
  * @version 1.0
  * @since <pre>2018/2/9 17:26</pre>
  */
-public class BaseEnumTypeHandler<E extends Enum<E> & BaseEnum<E, String>> extends BaseTypeHandler<E> {
+public abstract class BaseEnumTypeHandler<E extends Enum<E> & BaseEnum> extends BaseTypeHandler<E> {
     /**
-     * logger
+     * 枚举的class
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(BaseEnumTypeHandler.class);
     private Class<E> type;
+    /**
+     * 枚举的每个子类枚
+     */
     private E[] enums;
 
+    /**
+     * 一定要有默认的构造函数，不然抛出 not found method 异常
+     */
     public BaseEnumTypeHandler() {
     }
 
@@ -35,35 +41,38 @@ public class BaseEnumTypeHandler<E extends Enum<E> & BaseEnum<E, String>> extend
      * @param type 配置文件中设置的转换类
      */
     public BaseEnumTypeHandler(Class<E> type) {
-        if (type == null)
+        if (type == null) {
             throw new IllegalArgumentException("Type argument cannot be null");
+        }
         this.type = type;
         this.enums = type.getEnumConstants();
-        if (this.enums == null)
+        if (this.enums == null) {
             throw new IllegalArgumentException(type.getSimpleName()
                     + " does not represent an enum type.");
+        }
     }
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, E parameter,
                                     JdbcType jdbcType) throws SQLException {
-        //BaseTypeHandler已经帮我们做了parameter的null判断
+        /*
+         * BaseTypeHandler已经帮我们做了parameter的null判断
+         * 数据库存储的是枚举的值，所以我们这里使用 value ， 如果需要存储 name，可以自定义修改
+         */
         if (jdbcType == null) {
-            ps.setString(i, parameter.toString());
+            ps.setString(i, Objects.toString(parameter.getValue()));
         } else {
-            ps.setObject(i, parameter.name(), jdbcType.TYPE_CODE);
+            ps.setObject(i, parameter.getValue(), jdbcType.TYPE_CODE);
         }
     }
 
     @Override
     public E getNullableResult(ResultSet rs, String columnName)
             throws SQLException {
-        // 根据数据库存储类型决定获取类型，本例子中数据库中存放String类型
         String i = rs.getString(columnName);
         if (rs.wasNull()) {
             return null;
         } else {
-            // 根据数据库中的value值，定位PersonType子类
             return locateEnumStatus(i);
         }
     }
@@ -71,12 +80,10 @@ public class BaseEnumTypeHandler<E extends Enum<E> & BaseEnum<E, String>> extend
     @Override
     public E getNullableResult(ResultSet rs, int columnIndex)
             throws SQLException {
-        // 根据数据库存储类型决定获取类型，本例子中数据库中存放String类型
         String i = rs.getString(columnIndex);
         if (rs.wasNull()) {
             return null;
         } else {
-            // 根据数据库中的value值，定位PersonType子类
             return locateEnumStatus(i);
         }
     }
@@ -84,28 +91,30 @@ public class BaseEnumTypeHandler<E extends Enum<E> & BaseEnum<E, String>> extend
     @Override
     public E getNullableResult(CallableStatement cs, int columnIndex)
             throws SQLException {
-        // 根据数据库存储类型决定获取类型，本例子中数据库中存放String类型
         String i = cs.getString(columnIndex);
         if (cs.wasNull()) {
             return null;
         } else {
-            // 根据数据库中的value值，定位PersonType子类
             return locateEnumStatus(i);
         }
     }
 
     /**
-     * 枚举类型转换，由于构造函数获取了枚举的子类enums，让遍历更加高效快捷
+     * 枚举类型转换，由于构造函数获取了枚举的子类 enums，让遍历更加高效快捷，
+     * <p>
+     * 我将取出来的值 全部转换成字符串 进行比较，
      *
      * @param value 数据库中存储的自定义value属性
-     * @return value对应的枚举类
+     * @return value 对应的枚举类
      */
     private E locateEnumStatus(String value) {
         for (E e : enums) {
-            if (e.getValue().equals(value)) {
+            if (Objects.toString(e.getValue()).equals(value)) {
                 return e;
             }
         }
-        throw new IllegalArgumentException("未知的枚举类型：" + value + ",请核对" + type.getSimpleName());
+        throw new IllegalArgumentException("未知的枚举类型：" + value + ",请核对"
+                + type.getSimpleName());
     }
+
 }

@@ -3,16 +3,20 @@ package com.wuwii.module.sys.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wuwii.module.sys.common.util.SysConstant;
 import com.wuwii.module.sys.dao.SysUserDao;
 import com.wuwii.module.sys.entity.SysUserEntity;
 import com.wuwii.module.sys.service.SysUserService;
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 
-@Service("sysUserService")
+@Service
 public class SysUserServiceImpl implements SysUserService {
     @Resource
     private SysUserDao sysUserDao;
@@ -40,6 +44,14 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public void save(SysUserEntity sysUser) {
+        sysUser.setCreateDate(new Date());
+        // 密码加密
+        String salt = RandomStringUtils.randomAlphanumeric(20);
+        sysUser.setPassword(new Sha256Hash(sysUser.getPassword(), salt).toHex());
+        sysUser.setSalt(salt);
+        sysUser.setUsername(sysUser.getEmail());
+        sysUser.setStatus(SysConstant.SysUserStatus.ACTIVE);
+        sysUser.setType(SysConstant.SysUserType.USER);
         sysUserDao.save(sysUser);
     }
 
@@ -56,6 +68,17 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public void deleteBatch(Long[] ids) {
         sysUserDao.deleteBatch(ids);
+    }
+
+    /**
+     * 根据用户名查找用户
+     *
+     * @param username 用户名
+     * @return 用户
+     */
+    @Override
+    public SysUserEntity queryByUsername(String username) {
+        return sysUserDao.queryByUsername(username);
     }
 
 }

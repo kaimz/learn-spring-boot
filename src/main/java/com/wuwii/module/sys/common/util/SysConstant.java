@@ -1,4 +1,4 @@
-package com.wuwii.module.sys.common;
+package com.wuwii.module.sys.common.util;
 
 import com.wuwii.common.util.BaseEnum;
 
@@ -14,24 +14,24 @@ public class SysConstant {
     /**
      * 人员状态
      */
-    public enum SysUserStatus implements BaseEnum<SysUserStatus, String> {
+    public enum SysUserStatus implements BaseEnum<SysUserStatus, Integer> {
         /**
          * 账户已经激活（默认）
          */
-        ACTIVE("1"),
+        ACTIVE(1),
         /**
          * 账户锁定
          */
-        LOCK("0");
+        LOCK(0);
 
-        private String value;
+        private Integer value;
 
-        private SysUserStatus(String value) {
+        private SysUserStatus(Integer value) {
             this.value = value;
         }
 
         @Override
-        public String getValue() {
+        public Integer getValue() {
             return value;
         }
     }
@@ -39,24 +39,24 @@ public class SysConstant {
     /**
      * 人员类型
      */
-    public enum SysUserType implements BaseEnum<SysUserType, String> {
+    public enum SysUserType implements BaseEnum<SysUserType, Integer> {
         /**
          * 普通用户
          */
-        USER("1"),
+        USER(1),
         /**
          * 系统管理员
          */
-        ADMIN("0");
+        ADMIN(0);
 
-        private String value;
+        private Integer value;
 
-        private SysUserType(String value) {
+        private SysUserType(Integer value) {
             this.value = value;
         }
 
         @Override
-        public String getValue() {
+        public Integer getValue() {
             return value;
         }
     }

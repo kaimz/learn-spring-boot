@@ -7,7 +7,7 @@ $(document).ready(function () {
         } else {
             $('.checkbox1').each(function () { //loop through each checkbox
                 this.checked = false; //deselect all checkboxes with class "checkbox1"                      
-            });
+            });        
         }
     });
 

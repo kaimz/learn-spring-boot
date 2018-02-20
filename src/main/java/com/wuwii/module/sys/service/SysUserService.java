@@ -28,4 +28,12 @@ public interface SysUserService {
     void delete(Long id);
 
     void deleteBatch(Long[] ids);
+
+    /**
+     * 根据用户名查找用户
+     *
+     * @param username 用户名
+     * @return 用户
+     */
+    SysUserEntity queryByUsername(String username);
 }

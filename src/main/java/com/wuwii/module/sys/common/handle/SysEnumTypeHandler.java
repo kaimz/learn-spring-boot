@@ -1,6 +1,8 @@
-package com.wuwii.common.util;
+package com.wuwii.module.sys.common.handle;
 
-import com.wuwii.module.sys.common.SysConstant;
+import com.wuwii.common.handle.BaseEnumTypeHandler;
+import com.wuwii.common.util.BaseEnum;
+import com.wuwii.module.sys.common.util.SysConstant;
 import org.apache.ibatis.type.MappedTypes;
 
 /**
@@ -12,13 +14,13 @@ import org.apache.ibatis.type.MappedTypes;
  * @since <pre>2018/2/9 18:12</pre>
  */
 @MappedTypes(value = {SysConstant.SysUserStatus.class, SysConstant.SysUserType.class})
-public class EnumTypeHandler<E extends Enum<E> & BaseEnum<E, String>> extends BaseEnumTypeHandler<E> {
+public class SysEnumTypeHandler<E extends Enum<E> & BaseEnum> extends BaseEnumTypeHandler<E> {
     /**
      * 设置配置文件设置的转换类以及枚举类内容，供其他方法更便捷高效的实现
      *
      * @param type 配置文件中设置的转换类
      */
-    public EnumTypeHandler(Class<E> type) {
+    public SysEnumTypeHandler(Class<E> type) {
         super(type);
     }
 }

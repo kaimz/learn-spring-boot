@@ -19,6 +19,10 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
       enabled: true
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
   #resources: # 指定静态资源的路径
    # static-locations: classpath:/static/,classpath:/views/
 
@@ -27,10 +31,26 @@ mybatis:
     mapperLocations: classpath:mapper/**/*.xml
     configuration:
         map-underscore-to-camel-case: true
-    typeHandlersPackage: com.wuwii.common.util
+    type-aliases-package: com.wuwii.module.**.entity
+    typeHandlersPackage: com.wuwii.module.sys.common.handle,com.wuwii.module.task.common.handle
+
 
 pagehelper:
   helper-dialect: mysql
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+
+# jwt 配置
+jwt:
+  # 加密密钥
+  secret: 61D73234C4F93E03074D74D74D1E39D9 #blog.wuwii.com
+  # token有效时长
+  expire: 604800 # 7天，单位秒
+  # token 存在 header 中的参数
+  header: token
+
+# 用户的 token 的有效时间
+sys:
+  user-token:
+    expire: 43200 # token 有效时间为 12 小时 单位 s

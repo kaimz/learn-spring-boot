@@ -1,6 +1,6 @@
 package com.wuwii.module.sys.service.impl;
 
-import com.wuwii.module.sys.common.SysConstant;
+import com.wuwii.module.sys.common.util.SysConstant;
 import com.wuwii.module.sys.dao.SysMenuDao;
 import com.wuwii.module.sys.dao.SysUserDao;
 import com.wuwii.module.sys.dao.SysUserTokenDao;

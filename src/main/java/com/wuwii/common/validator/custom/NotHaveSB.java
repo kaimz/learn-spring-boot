@@ -1,4 +1,4 @@
-package com.wuwii.common.validator;
+package com.wuwii.common.validator.custom;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

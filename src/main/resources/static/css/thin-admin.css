@@ -1,4 +1,5 @@
 
+
 body {
     background-color: #54364a;
     background-size: cover;
@@ -1232,11 +1233,9 @@ h3.tl-title {
     margin: 0;
     padding: 0;
 }
-
 .todo-title {
     margin-right: 70px;
 }
-
 .to-do-list li {
     background: rgba(0, 0, 0, 0.25);
     cursor: move;
@@ -1245,28 +1244,23 @@ h3.tl-title {
     padding: 13px;
     position: relative;
 }
-
 .to-do-list li p {
     margin-bottom: 0;
 }
-
 .todo-actionlist {
     position: absolute;
     right: 15px;
     top: 13px;
 }
-
 .todo-actionlist a {
     display: inline-block;
     float: left;
     height: 24px;
     width: 24px;
 }
-
 .todo-list-active {
     background: rgba(255, 255, 255, 0.25) !important;
 }
-
 .todo-actionlist a i {
     color: #CCCCCC;
     display: inline-block;
@@ -1275,23 +1269,18 @@ h3.tl-title {
     text-align: center;
     width: 24px;
 }
-
 .todo-actionlist a:hover i {
     color: #666666;
 }
-
 .todo-done i {
     font-size: 14px;
 }
-
 .todo-remove i {
     cursor: pointer;
 }
-
 .line-through {
     text-decoration: line-through;
 }
-
 .todo-action-bar {
     margin-top: 20px;
 }
@@ -1313,7 +1302,6 @@ h3.tl-title {
     top: 2px;
     width: 7px;
 }
-
 .drag-marker i {
     background: none repeat scroll 0 0 #CCCCCC;
     box-shadow: 5px 0 0 0 #CCCCCC, 0 5px 0 0 #CCCCCC, 5px 5px 0 0 #CCCCCC, 0 10px 0 0 #CCCCCC, 5px 10px 0 0 #CCCCCC, 0 15px 0 0 #CCCCCC, 5px 15px 0 0 #CCCCCC;
@@ -1325,14 +1313,12 @@ h3.tl-title {
 .to-do-list li .todo-check input[type="checkbox"] {
     visibility: hidden;
 }
-
 .todo-check {
     margin-left: 10px;
     margin-right: 10px;
     position: relative;
     width: 20px;
 }
-
 .todo-check label {
     border: 1px solid #CCCCCC;
     border-radius: 2px;
@@ -1343,7 +1329,6 @@ h3.tl-title {
     top: 0;
     width: 20px;
 }
-
 .todo-check label:after {
     -moz-border-bottom-colors: none;
     -moz-border-left-colors: none;
@@ -1363,23 +1348,18 @@ h3.tl-title {
     transform: rotate(-45deg);
     width: 13px;
 }
-
 .todo-checklabel:hover:after {
     opacity: 0.3;
 }
-
 .todo-check input[type="checkbox"]:checked + label:after {
     opacity: 1;
 }
-
 .btn-todo-select button, .btn-add-task button {
     width: 100%;
 }
-
 .todo-search-wrap {
     padding: 0;
 }
-
 .todo-search {
     border-radius: 3px !important;
 }
@@ -1388,23 +1368,18 @@ h3.tl-title {
     font-size: 20px;
     font-weight: 300;
 }
-
 .fontawesome-icon-list .col-sm-4, .fontawesome-icon-list .col-md-3, .fontawesome-icon-list .col-xs-6 {
     margin-bottom: 10px;
 }
-
 .fontawesome-icon-list .page-header {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-
 .fontawesome-icon-list a {
     color: #fff;
 }
-
 .fontawesome-icon-list a:hover {
     color: #eee;
 }
-
 .fontawesome-icon-list i {
     font-size: 16px;
     padding-right: 10px;

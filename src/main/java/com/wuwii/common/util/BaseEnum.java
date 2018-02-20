@@ -9,7 +9,8 @@ package com.wuwii.common.util;
  */
 public interface BaseEnum<E extends Enum<?>, T> {
     /**
-     * @return 获取枚举的值
+     * 获取枚举的值
+     * @return 枚举的值
      */
     T getValue();
 }

@@ -1,5 +1,7 @@
 package com.wuwii.common.exception;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * 自定义处理异常
  *
@@ -13,9 +15,9 @@ public class KCException extends RuntimeException {
      */
     private String msg;
     /**
-     * 状态码，默认服务器错误  500
+     * 状态码，默认请求错误  400
      */
-    private int code = 500;
+    private int code = HttpStatus.BAD_REQUEST.value();
 
     public KCException(String msg, int code) {
         super(msg);

@@ -120,4 +120,10 @@
             LEFT JOIN sys_menu m ON rm.menu_id = m.id
         WHERE ur.user_id = #{userId}
     </select>
+
+    <select id="queryByUsername" resultType="com.wuwii.module.sys.entity.SysUserEntity" parameterType="string">
+        SELECT *
+        FROM sys_user
+        WHERE username = #{username}
+    </select>
 </mapper>

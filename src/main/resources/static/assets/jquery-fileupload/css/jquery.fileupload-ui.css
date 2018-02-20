@@ -14,7 +14,6 @@
     position: relative;
     overflow: hidden;
 }
-
 .fileinput-button input {
     position: absolute;
     top: 0;
@@ -27,17 +26,14 @@
     direction: ltr;
     cursor: pointer;
 }
-
 .fileupload-buttonbar .btn,
 .fileupload-buttonbar .toggle {
     margin-bottom: 5px;
 }
-
 .progress-animated .bar {
     background: url(../img/progressbar.gif) !important;
     filter: none;
 }
-
 .fileupload-loading {
     float: right;
     width: 32px;
@@ -46,11 +42,9 @@
     background-size: contain;
     display: none;
 }
-
 .fileupload-processing .fileupload-loading {
     display: block;
 }
-
 .files audio,
 .files video {
     max-width: 300px;

@@ -2,9 +2,15 @@ package com.wuwii.module.sys.controller;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
-import com.wuwii.common.validator.ValidatorUtils;
+import com.wuwii.common.validator.custom.CustomValid;
+import com.wuwii.common.validator.custom.ValidatorUtils;
 import com.wuwii.module.sys.entity.SysUserEntity;
+import com.wuwii.module.sys.form.SysUserAddForm;
 import com.wuwii.module.sys.service.SysUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -23,26 +29,32 @@ import static org.springframework.http.HttpStatus.*;
  */
 @RestController
 @RequestMapping("/sys/user")
-public class SysUserController {
+@Api("用户管理")
+public class SysUserController extends BaseController {
     @Autowired
     private SysUserService sysUserService;
 
     @GetMapping()
-    public ResponseEntity<List<SysUserEntity>> query() {
+    @ApiOperation("用于测试，查询")
+    public ResponseEntity<List<SysUserEntity>> query(@CustomValid String string) {
         return new ResponseEntity<>(sysUserService.query(new SysUserEntity()), OK);
     }
 
     @GetMapping("/page")
+    @ApiOperation("用于测试，分页")
+    @RequiresPermissions("list")
     public ResponseEntity<Page<SysUserEntity>> queryByPage() {
         return new ResponseEntity<>(sysUserService.queryByPage(new SysUserEntity()), OK);
     }
 
     @GetMapping("/pageinfo")
+    @ApiOperation("用于测试，分页")
     public ResponseEntity<PageInfo<SysUserEntity>> queryByPageInfo() {
         return new ResponseEntity<>(sysUserService.queryByPageInfo(new SysUserEntity()), OK);
     }
 
     @PostMapping("/valid")
+    @ApiOperation("用于测试，参数校验")
     public ResponseEntity<String> valid(@Validated @RequestBody SysUserEntity user, BindingResult result) {
         if (result.hasErrors()) {
             return ResponseEntity.status(BAD_REQUEST).body("校验失败");
@@ -51,14 +63,19 @@ public class SysUserController {
     }
 
     @PostMapping("/valid1")
+    @ApiOperation("用于测试，参数校验")
     public ResponseEntity<String> customValid(@RequestBody SysUserEntity user) {
         ValidatorUtils.validateEntity(user);
         return ResponseEntity.status(OK).body("校验成功");
     }
 
     @PostMapping()
-    public ResponseEntity insert(@RequestBody SysUserEntity user) {
-        sysUserService.save(user);
+    @ApiOperation("新增")
+    public ResponseEntity insert(@Validated SysUserAddForm user) {
+        SysUserEntity userEntity = new SysUserEntity();
+        BeanUtils.copyProperties(user, userEntity);
+        userEntity.setCreateUserId(getUserId());
+        sysUserService.save(userEntity);
         return ResponseEntity.status(CREATED).body("新增成功");
     }
 

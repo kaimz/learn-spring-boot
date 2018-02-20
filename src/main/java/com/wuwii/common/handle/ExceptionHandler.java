@@ -1,16 +1,25 @@
-package com.wuwii.common.exception;
+package com.wuwii.common.handle;
 
+import com.wuwii.common.exception.KCException;
+import org.apache.shiro.authc.CredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.*;
 
 /**
  * 表示 注解 RestController 的异常统一处理
+ * <p>
+ * 首先处理已知异常，
  *
  * @author KronChan
  * @version 1.0
@@ -31,19 +40,48 @@ public class ExceptionHandler {
      */
     @org.springframework.web.bind.annotation.ExceptionHandler(KCException.class)
     public ResponseEntity<String> handleKCException(KCException e) {
-        LOGGER.error(e.getMessage(), e);
+        LOGGER.debug(e.getMessage(), e);
         return ResponseEntity.status(e.getCode()).body(e.getMessage());
+    }
+
+    /**
+     * 参数检验违反约束（数据校验）
+     *
+     * @param e BindException
+     * @return error message
+     */
+    @org.springframework.web.bind.annotation.ExceptionHandler(BindException.class)
+    public ResponseEntity<String> handleConstraintViolationException(BindException e) {
+        LOGGER.debug(e.getMessage(), e);
+        return ResponseEntity.status(BAD_REQUEST).body(
+                e.getBindingResult()
+                        .getAllErrors()
+                        .stream()
+                        .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                        .collect(Collectors.joining(",")));
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(DuplicateKeyException.class)
     public ResponseEntity<String> handleDuplicateKeyException(DuplicateKeyException e) {
-        LOGGER.error(e.getMessage(), e);
+        LOGGER.debug(e.getMessage(), e);
         return ResponseEntity.status(CONFLICT).body("数据库中已存在该记录");
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(LockedAccountException.class)
+    public ResponseEntity<String> handleLockedAccountException(LockedAccountException e) {
+        LOGGER.debug(e.getMessage(), e);
+        return ResponseEntity.status(UNAUTHORIZED).body("账号已被锁定,请联系管理员");
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(CredentialsException.class)
+    public ResponseEntity<String> handleCredentialsException(CredentialsException e) {
+        LOGGER.debug(e.getMessage(), e);
+        return ResponseEntity.status(UNAUTHORIZED).body("登陆信息失效，请重新登录");
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(AuthorizationException.class)
     public ResponseEntity<String> handleAuthorizationException(AuthorizationException e) {
-        LOGGER.error(e.getMessage(), e);
+        LOGGER.debug(e.getMessage(), e);
         return ResponseEntity.status(UNAUTHORIZED).body("没有权限，请联系管理员授权");
     }
 

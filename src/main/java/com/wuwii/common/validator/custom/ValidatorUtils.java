@@ -1,4 +1,4 @@
-package com.wuwii.common.validator;
+package com.wuwii.common.validator.custom;
 
 import com.wuwii.common.exception.KCException;
 
@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 /**
  * hibernate-validator校验工具类，校验不通过抛出自定义异常
+ *
  * @author KronChan
  * @version 1.0
  * @since <pre>2018/2/1 8:34</pre>
