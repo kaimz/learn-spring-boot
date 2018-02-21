@@ -1,6 +1,7 @@
 package com.wuwii.common.config;
 
 import com.wuwii.module.sys.autho2.OAuth2Realm;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -131,13 +132,24 @@ public class ShiroConfig {
      *  <b>需要在身份认证中添加 realm.setCredentialsMatcher(hashedCredentialsMatcher())</b>
      * @return
      */
-    /*@Bean
+    @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-
-        hashedCredentialsMatcher.setHashAlgorithmName("md5");//散列算法:这里使用MD5算法;
-        hashedCredentialsMatcher.setHashIterations(2);//散列的次数，比如散列两次，相当于 md5(md5(""));
-
+        hashedCredentialsMatcher.setHashAlgorithmName("SHA-256");//散列算法:MD2、MD5、SHA1、SHA256、SHA384、SHA512等。
+        hashedCredentialsMatcher.setHashIterations(1);//散列的次数，默认1次， 设置两次相当于 md5(md5(""));
         return hashedCredentialsMatcher;
-    }*/
+    }
+
+    /**
+     * 注册身份验证
+     *
+     * @param hashedCredentialsMatcher 凭证匹配器
+     * @return
+     */
+    @Bean
+    public OAuth2Realm oAuth2Realm(HashedCredentialsMatcher hashedCredentialsMatcher) {
+        OAuth2Realm oAuth2Realm = new OAuth2Realm();
+        oAuth2Realm.setCredentialsMatcher(hashedCredentialsMatcher);
+        return oAuth2Realm;
+    }
 }

@@ -9,7 +9,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.stereotype.Component;
+import org.apache.shiro.util.ByteSource;
 
 import javax.annotation.Resource;
 import java.util.Set;
@@ -17,12 +17,12 @@ import java.util.Set;
 /**
  * 认证
  */
-@Component
 public class OAuth2Realm extends AuthorizingRealm {
     @Resource
     private ShiroService shiroService;
     @Resource
     private SysUserService sysUserService;
+
 
 
     /**
@@ -49,7 +49,6 @@ public class OAuth2Realm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SysUserEntity user = (SysUserEntity) (principals.getPrimaryPrincipal());
-        ;
 
         //用户权限列表
         Set<String> permsSet = shiroService.getUserPermissions(user.getId());
@@ -79,6 +78,7 @@ public class OAuth2Realm extends AuthorizingRealm {
         return new SimpleAuthenticationInfo(
                 user, // 存入凭证的信息，登陆成功后可以使用 SecurityUtils.getSubject().getPrincipal();在任何地方使用它
                 user.getPassword(),
+                ByteSource.Util.bytes(user.getSalt()),
                 getName());
 
         // 加密的方式
