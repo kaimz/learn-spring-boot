@@ -2,6 +2,7 @@ package com.wuwii.module.sys.common.util;
 
 import com.wuwii.common.exception.KCException;
 import com.wuwii.module.sys.entity.SysUserEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -15,6 +16,7 @@ import org.apache.shiro.subject.Subject;
  * @version 1.0
  * @since <pre>2018/2/11 17:42</pre>
  */
+@Slf4j
 public class ShiroUtils {
 
     public static Session getSession() {

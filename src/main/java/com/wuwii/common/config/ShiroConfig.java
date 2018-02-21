@@ -28,6 +28,9 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
+    /**
+     * 会话工厂
+     */
     @Bean
     public SessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();

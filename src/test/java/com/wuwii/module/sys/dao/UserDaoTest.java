@@ -1,6 +1,5 @@
 package com.wuwii.module.sys.dao;
 
-import com.wuwii.module.sys.entity.SysUserEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,10 +24,11 @@ public class UserDaoTest {
     @Transactional
     @Rollback(false)
     public void test() {
-        SysUserEntity user = new SysUserEntity();
+        /*SysUserEntity user = new SysUserEntity();
         user.setUsername("124");
         user.setPassword("123");
-        userDao.save(user);
+        userDao.save(user);*/
         //Assert.assertThat("123".equals(us));
+        System.out.println(userDao.queryList(null));
     }
 }
