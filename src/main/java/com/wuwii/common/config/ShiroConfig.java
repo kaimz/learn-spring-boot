@@ -27,6 +27,7 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig {
+    public final static int hashIterations = 1;
 
     /**
      * 会话工厂
@@ -76,7 +77,8 @@ public class ShiroConfig {
         filterMap.put("/sys/login", "anon");
         // 自定义的拦截
         //filterMap.put("/sys/**", "oauth2");
-        filterMap.put("/sys/**", "authc");
+
+        //filterMap.put("/sys/**", "authc");
         // 登陆的 url
         shiroFilter.setLoginUrl("/sys/login");
         // 登陆成功跳转的 url
@@ -139,7 +141,7 @@ public class ShiroConfig {
     public HashedCredentialsMatcher hashedCredentialsMatcher() {
         HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         hashedCredentialsMatcher.setHashAlgorithmName("SHA-256");//散列算法:MD2、MD5、SHA1、SHA256、SHA384、SHA512等。
-        hashedCredentialsMatcher.setHashIterations(1);//散列的次数，默认1次， 设置两次相当于 md5(md5(""));
+        hashedCredentialsMatcher.setHashIterations(hashIterations);//散列的次数，默认1次， 设置两次相当于 md5(md5(""));
         return hashedCredentialsMatcher;
     }
 

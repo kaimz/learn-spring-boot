@@ -46,7 +46,7 @@ jwt:
   # 加密密钥
   secret: 61D73234C4F93E03074D74D74D1E39D9 #blog.wuwii.com
   # token有效时长
-  expire: 604800 # 7天，单位秒
+  expire: 7 # 7天，单位天
   # token 存在 header 中的参数
   header: token
 

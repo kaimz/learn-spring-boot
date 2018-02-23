@@ -1,5 +1,8 @@
 server:
-  port: 80
+  port: 8013
+
+swagger:
+  enable: false
 
 spring:
     datasource:

@@ -3,6 +3,7 @@ package com.wuwii.module.sys.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wuwii.common.config.ShiroConfig;
 import com.wuwii.module.sys.common.util.ShiroUtils;
 import com.wuwii.module.sys.common.util.SysConstant;
 import com.wuwii.module.sys.dao.SysUserDao;
@@ -49,7 +50,7 @@ public class SysUserServiceImpl implements SysUserService {
         sysUser.setPassword(new Sha256Hash(sysUser.getPassword(), salt).toHex());*/
 
         String salt = ShiroUtils.generateSalt(20);
-        sysUser.setPassword(ShiroUtils.encryptPassword("SHA-256", sysUser.getPassword(), salt));
+        sysUser.setPassword(ShiroUtils.encryptPassword("SHA-256", sysUser.getPassword(), salt, ShiroConfig.hashIterations));
         sysUser.setSalt(salt);
         sysUser.setUsername(sysUser.getEmail());
         sysUser.setStatus(SysConstant.SysUserStatus.ACTIVE);

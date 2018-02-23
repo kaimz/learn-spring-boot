@@ -1,6 +1,9 @@
 server:
   port: 8013
 
+swagger:
+  enable: true
+
 spring:
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource

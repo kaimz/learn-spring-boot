@@ -35,6 +35,9 @@
 		<swagger.version>2.7.0</swagger.version>
 		<pagehelper.version>1.2.3</pagehelper.version>
 		<lombok.version>1.16.20</lombok.version>
+
+		<asciidoctor.html.output.directory>/doc</asciidoctor.html.output.directory>
+		<asciidoctor.pdf.output.directory>doc</asciidoctor.pdf.output.directory>
 	</properties>
 
 	<dependencies>
@@ -155,7 +158,11 @@
 			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>io.github.swagger2markup</groupId>
+			<artifactId>swagger2markup</artifactId>
+			<version>1.3.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -174,6 +181,37 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+
+			<!--通过Asciidoctor使得asciidoc生成其他的文档格式，例如：PDF 或者HTML5-->
+			<plugin>
+				<groupId>io.github.swagger2markup</groupId>
+				<artifactId>swagger2markup-maven-plugin</artifactId>
+				<version>1.3.1</version>
+				<configuration>
+					<swaggerInput>http://localhost:8013/v2/api-docs</swaggerInput>
+					<outputDir>/docs/asciidoc/generated</outputDir>
+					<config>
+						<!--设置输出文件的语言：ASCIIDOC, MARKDOWN, CONFLUENCE_MARKUP-->
+						<swagger2markup.markupLanguage>MARKDOWN</swagger2markup.markupLanguage>
+						<swagger2markup.pathsGroupedBy>Tags</swagger2markup.pathsGroupedBy>
+					</config>
+				</configuration>
+			</plugin>
+			<!--asciidoctor:process-asciidoc命令生成 html-->
+			<plugin>
+				<groupId>org.asciidoctor</groupId>
+				<artifactId>asciidoctor-maven-plugin</artifactId>
+				<version>1.5.6</version>
+				<configuration>
+					<sourceDirectory>/docs/asciidoc/generated</sourceDirectory>
+					<outputDirectory>/docs/asciidoc/html</outputDirectory>
+					<backend>html</backend>
+					<sourceHighlighter>coderay</sourceHighlighter>
+					<attributes>
+						<toc>left</toc>
+					</attributes>
 				</configuration>
 			</plugin>
 		</plugins>

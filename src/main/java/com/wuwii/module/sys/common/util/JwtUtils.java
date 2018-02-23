@@ -3,6 +3,7 @@ package com.wuwii.module.sys.common.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -32,7 +33,7 @@ public class JwtUtils {
     /**
      * 有效期限
      */
-    private long expire;
+    private int expire;
     /**
      * 存储 token
      */
@@ -46,14 +47,12 @@ public class JwtUtils {
      */
     public String generateToken(long userId) {
         Date nowDate = new Date();
-        //过期时间
-        Date expireDate = new Date(nowDate.getTime() + expire * 1000);
 
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
                 .setSubject(userId + "")
                 .setIssuedAt(nowDate)
-                .setExpiration(expireDate)
+                .setExpiration(DateUtils.addDays(nowDate, expire))
                 // 这里我采用的是 HS512 算法
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
@@ -95,11 +94,11 @@ public class JwtUtils {
         this.secret = secret;
     }
 
-    public long getExpire() {
+    public int getExpire() {
         return expire;
     }
 
-    public void setExpire(long expire) {
+    public void setExpire(int expire) {
         this.expire = expire;
     }
 

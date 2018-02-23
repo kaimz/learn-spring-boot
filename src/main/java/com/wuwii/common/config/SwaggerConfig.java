@@ -1,5 +1,6 @@
 package com.wuwii.common.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -18,6 +19,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+
+    /**
+     * 启用
+     */
+    @Value("${swagger.enable}")
+    private boolean enable;
     /**
      * SpringBoot默认已经将classpath:/META-INF/resources/和classpath:/META-INF/resources/webjars/映射
      * 所以该方法不需要重写，如果在SpringMVC中，可能需要重写定义（我没有尝试）
@@ -48,5 +55,13 @@ public class SwaggerConfig {
                 .termsOfServiceUrl("https://blog.wuwii.com/")
                 .version("1.0")
                 .build();
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 }
