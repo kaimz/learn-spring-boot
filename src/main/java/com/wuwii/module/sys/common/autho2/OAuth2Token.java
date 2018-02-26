@@ -1,4 +1,4 @@
-package com.wuwii.module.sys.autho2;
+package com.wuwii.module.sys.common.autho2;
 
 
 import org.apache.shiro.authc.AuthenticationToken;
