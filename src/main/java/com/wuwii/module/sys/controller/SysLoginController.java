@@ -3,6 +3,7 @@ package com.wuwii.module.sys.controller;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.wuwii.common.exception.KCException;
+import com.wuwii.module.sys.common.util.JwtUtils;
 import com.wuwii.module.sys.common.util.ShiroUtils;
 import com.wuwii.module.sys.common.util.SysConstant;
 import com.wuwii.module.sys.form.SysUserLoginForm;
@@ -40,6 +41,8 @@ public class SysLoginController extends BaseController {
     private SysUserService sysUserService;
     @Resource
     private SysUserTokenService sysUserTokenService;
+    @Resource
+    private JwtUtils jwtUtils;
 
     /**
      * 获取验证码
@@ -56,7 +59,9 @@ public class SysLoginController extends BaseController {
         //保存到shiro session
         ShiroUtils.setSessionAttribute(Constants.KAPTCHA_SESSION_KEY, text);
         HttpHeaders headers = new HttpHeaders();
+        //headers.set(HttpHeaders.SET_COOKIE2, text);
         headers.setCacheControl("no-store, no-cache");
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .headers(headers)
@@ -78,7 +83,7 @@ public class SysLoginController extends BaseController {
         if (getUser().getStatus() == SysConstant.SysUserStatus.LOCK) {
             throw new KCException("账号已被锁定,请联系管理员");
         }
-        return ResponseEntity.status(HttpStatus.OK).body("登陆成功！");
+        return ResponseEntity.status(HttpStatus.OK).body(jwtUtils.generateToken(getUserId()));
     }
     /*@RequestMapping("/login")
     public String login(HttpServletRequest request) {

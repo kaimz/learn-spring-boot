@@ -7,7 +7,7 @@ import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
@@ -19,7 +19,7 @@ import java.util.Date;
  * @since <pre>2018/2/11 13:04</pre>
  */
 @ConfigurationProperties(prefix = "jwt")
-@Component
+@Service
 public class JwtUtils {
     /**
      * logger

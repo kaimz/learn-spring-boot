@@ -1,6 +1,7 @@
 package com.wuwii.common.config;
 
-import com.wuwii.module.sys.autho2.OAuth2Realm;
+import com.wuwii.module.sys.common.autho2.OAuth2Filter;
+import com.wuwii.module.sys.common.autho2.OAuth2Realm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -13,6 +14,8 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -27,6 +30,9 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig {
+    /**
+     * 密码加密迭代次数
+     */
     public final static int hashIterations = 1;
 
     /**
@@ -57,14 +63,14 @@ public class ShiroConfig {
     }
 
     @Bean
-    public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
+    public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager, OAuth2Filter oAuth2Filter) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
 
         //自定义一个oauth2拦截器，不设置就是使用默认的拦截器
-        /*Map<String, Filter> filters = new HashMap<>();
-        filters.put("oauth2", new OAuth2Filter());
-        shiroFilter.setFilters(filters);*/
+        Map<String, Filter> filters = new HashMap<>();
+        filters.put("oauth2", oAuth2Filter);
+        shiroFilter.setFilters(filters);
         //拦截器
         //<!-- 过滤链定义，从上向下顺序执行，一般将 /**放在最为下边 -->
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
@@ -76,9 +82,9 @@ public class ShiroConfig {
         // 设置系统模块下访问需要权限
         filterMap.put("/sys/login", "anon");
         // 自定义的拦截
-        //filterMap.put("/sys/**", "oauth2");
+        filterMap.put("/sys/**", "oauth2");
 
-        //filterMap.put("/sys/**", "authc");
+        // filterMap.put("/sys/**", "authc");
         // 登陆的 url
         shiroFilter.setLoginUrl("/sys/login");
         // 登陆成功跳转的 url
@@ -157,4 +163,10 @@ public class ShiroConfig {
         oAuth2Realm.setCredentialsMatcher(hashedCredentialsMatcher);
         return oAuth2Realm;
     }
+
+    @Bean
+    public OAuth2Filter oAuth2Filter() {
+        return new OAuth2Filter();
+    }
+
 }

@@ -38,7 +38,7 @@ public class SysUserController extends BaseController {
 
     @ApiOperation("用于测试，查询")
     @ApiImplicitParam(name = "string", value = "id", dataType = "string")
-    @RequiresPermissions("sys:user:list1")
+    @RequiresPermissions("sys:user:list")
     @GetMapping()
     public ResponseEntity<List<SysUserEntity>> query(@CustomValid String string) {
         return new ResponseEntity<>(sysUserService.query(new SysUserEntity()), OK);

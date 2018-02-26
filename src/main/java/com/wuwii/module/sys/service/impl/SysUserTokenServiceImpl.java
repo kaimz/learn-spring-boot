@@ -1,6 +1,6 @@
 package com.wuwii.module.sys.service.impl;
 
-import com.wuwii.module.sys.autho2.TokenGenerator;
+import com.wuwii.module.sys.common.autho2.TokenGenerator;
 import com.wuwii.module.sys.dao.SysUserTokenDao;
 import com.wuwii.module.sys.entity.SysUserTokenEntity;
 import com.wuwii.module.sys.service.SysUserTokenService;
