@@ -78,9 +78,9 @@ public class ShiroConfig {
         //配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterMap.put("/sys/logout", "logout");
         // 验证码
-        filterMap.put("/sys/captcha.jpg", "anon");
+        filterMap.put("/captcha.jpg", "anon");
         // 设置系统模块下访问需要权限
-        filterMap.put("/sys/login", "anon");
+        filterMap.put("/login", "anon");
         // 自定义的拦截
         filterMap.put("/sys/**", "oauth2");
 

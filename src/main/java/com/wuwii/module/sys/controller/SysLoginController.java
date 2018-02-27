@@ -18,7 +18,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -33,7 +36,6 @@ import java.io.IOException;
  */
 @RestController
 @Api("用户登陆")
-@RequestMapping("/sys")
 public class SysLoginController extends BaseController {
     @Resource
     private Producer producer;
@@ -75,9 +77,13 @@ public class SysLoginController extends BaseController {
         if (!userForm.getCaptcha().equalsIgnoreCase(kaptcha)) {
             throw new KCException("验证码不正确！");
         }
-        UsernamePasswordToken token = new UsernamePasswordToken(userForm.getUsername(), userForm.getPassword());
-        Subject currentUser = SecurityUtils.getSubject();
-        currentUser.login(token);
+        try {
+            UsernamePasswordToken token = new UsernamePasswordToken(userForm.getUsername(), userForm.getPassword());
+            Subject currentUser = SecurityUtils.getSubject();
+            currentUser.login(token);
+        } catch (Exception e) {
+            throw new KCException("账号或密码错误");
+        }
 
         //账号锁定
         if (getUser().getStatus() == SysConstant.SysUserStatus.LOCK) {
