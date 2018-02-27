@@ -1,6 +1,5 @@
 package com.wuwii.module.sys.common.autho2;
 
-import com.wuwii.common.exception.KCException;
 import com.wuwii.module.sys.entity.SysUserEntity;
 import com.wuwii.module.sys.service.ShiroService;
 import com.wuwii.module.sys.service.SysUserService;
@@ -12,6 +11,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
 import javax.annotation.Resource;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -69,16 +69,12 @@ public class OAuth2Realm extends AuthorizingRealm {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
         SysUserEntity user = sysUserService.queryByUsername(usernamePasswordToken.getUsername());
         //账号不存在、密码错误
-        if (user == null) {
-            throw new KCException("账号或密码不正确");
-        }
-
         // 交给 shiro 自己去验证，
         // 明文验证
         return new SimpleAuthenticationInfo(
                 user, // 存入凭证的信息，登陆成功后可以使用 SecurityUtils.getSubject().getPrincipal();在任何地方使用它
-                user.getPassword(),
-                ByteSource.Util.bytes(user.getSalt()),
+                Optional.ofNullable(user).map(SysUserEntity::getPassword),
+                ByteSource.Util.bytes(Optional.ofNullable(user).map(SysUserEntity::getSalt).orElse("")),
                 getName());
 
         // 加密的方式

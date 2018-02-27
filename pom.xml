@@ -35,6 +35,7 @@
 		<swagger.version>2.7.0</swagger.version>
 		<pagehelper.version>1.2.3</pagehelper.version>
 		<lombok.version>1.16.20</lombok.version>
+		<redis.version>1.4.7.RELEASE</redis.version>
 
 		<asciidoctor.html.output.directory>/doc</asciidoctor.html.output.directory>
 		<asciidoctor.pdf.output.directory>doc</asciidoctor.pdf.output.directory>
@@ -64,6 +65,15 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session</artifactId>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>

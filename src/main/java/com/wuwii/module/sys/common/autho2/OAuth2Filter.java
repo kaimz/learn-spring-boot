@@ -11,6 +11,7 @@ import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
@@ -113,10 +114,10 @@ public class OAuth2Filter extends FormAuthenticationFilter {
      * @param response
      */
     private void onLoginFail(ServletResponse response) {
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
         ((HttpServletResponse) response).setStatus(HttpStatus.UNAUTHORIZED.value());
+        ((HttpServletResponse) response).setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         try {
-            response.getWriter().print("没有权限，请联系管理员授权");
+            ((HttpServletResponse) response).getWriter().print("没有权限，请联系管理员授权");
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
