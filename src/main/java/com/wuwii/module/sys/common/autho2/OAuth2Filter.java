@@ -76,15 +76,6 @@ public class OAuth2Filter extends FormAuthenticationFilter {
      */
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        //获取请求token，如果token不存在，直接返回401
-        /*String token = getRequestToken((HttpServletRequest) request);
-        if (StringUtils.isBlank(token)) {
-            HttpServletResponse httpResponse = (HttpServletResponse) response;
-            ((HttpServletResponse) response).setStatus(401);
-            response.getWriter().print("没有权限，请联系管理员授权");
-            return false;
-        }
-        return executeLogin(request, response);*/
         if (isLoginRequest(request, response)) {
             if (isLoginSubmission(request, response)) {
                 return executeLogin(request, response);
@@ -141,15 +132,17 @@ public class OAuth2Filter extends FormAuthenticationFilter {
         if (StringUtils.isBlank(token)) {
             return httpRequest.getParameter(jwtUtils.getHeader());
         }
-        // 从 cookie 获取 token
-        Cookie[] cookies = httpRequest.getCookies();
-        if (null == cookies || cookies.length == 0) {
-            return null;
-        }
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(jwtUtils.getHeader())) {
-                token = cookie.getValue();
-                break;
+        if (StringUtils.isBlank(token)) {
+            // 从 cookie 获取 token
+            Cookie[] cookies = httpRequest.getCookies();
+            if (null == cookies || cookies.length == 0) {
+                return null;
+            }
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(jwtUtils.getHeader())) {
+                    token = cookie.getValue();
+                    break;
+                }
             }
         }
         return token;

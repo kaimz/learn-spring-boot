@@ -83,6 +83,7 @@ public class SysLoginController extends BaseController {
         if (getUser().getStatus() == SysConstant.SysUserStatus.LOCK) {
             throw new KCException("账号已被锁定,请联系管理员");
         }
+        // 登陆成功后直接返回 token ,然后后续放到 header 中认证
         return ResponseEntity.status(HttpStatus.OK).body(jwtUtils.generateToken(getUserId()));
     }
     /*@RequestMapping("/login")

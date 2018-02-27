@@ -7,7 +7,7 @@ import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
@@ -19,7 +19,7 @@ import java.util.Date;
  * @since <pre>2018/2/11 13:04</pre>
  */
 @ConfigurationProperties(prefix = "jwt")
-@Service
+@Component
 public class JwtUtils {
     /**
      * logger
@@ -50,6 +50,7 @@ public class JwtUtils {
 
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
+                // 后续获取 subject 是 userid
                 .setSubject(userId + "")
                 .setIssuedAt(nowDate)
                 .setExpiration(DateUtils.addDays(nowDate, expire))
@@ -72,7 +73,6 @@ public class JwtUtils {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
-            logger.debug("validate is token error ", e);
             return null;
         }
     }
