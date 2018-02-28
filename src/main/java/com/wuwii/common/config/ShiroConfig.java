@@ -3,6 +3,7 @@ package com.wuwii.common.config;
 import com.wuwii.module.sys.common.autho2.OAuth2Filter;
 import com.wuwii.module.sys.common.autho2.OAuth2Realm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -10,6 +11,7 @@ import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSource
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.crazycake.shiro.RedisCacheManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,11 +56,13 @@ public class ShiroConfig {
      * @return
      */
     @Bean
-    public SecurityManager securityManager(OAuth2Realm oAuth2Realm, SessionManager sessionManager) {
+    public SecurityManager securityManager(OAuth2Realm oAuth2Realm, SessionManager sessionManager,
+                                           RedisCacheManager cacheManager, EhCacheManager ehCacheManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 可以添加多个认证，执行顺序是有影响的
         securityManager.setRealm(oAuth2Realm);
         securityManager.setSessionManager(sessionManager);
+        securityManager.setCacheManager(cacheManager);
         return securityManager;
     }
 
@@ -140,7 +144,8 @@ public class ShiroConfig {
      * （由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了
      * 所以我们需要修改下doGetAuthenticationInfo中的代码;
      * ）
-     *  <b>需要在身份认证中添加 realm.setCredentialsMatcher(hashedCredentialsMatcher())</b>
+     * <b>需要在身份认证中添加 realm.setCredentialsMatcher(hashedCredentialsMatcher())</b>
+     *
      * @return
      */
     @Bean
@@ -167,6 +172,35 @@ public class ShiroConfig {
     @Bean
     public OAuth2Filter oAuth2Filter() {
         return new OAuth2Filter();
+    }
+
+
+    /**
+     * redis 管理
+     */
+    @Bean
+    public CustomRedisManager customRedisManager() {
+        return new CustomRedisManager();
+    }
+
+    /**
+     * redis 缓存
+     */
+    @Bean
+    public RedisCacheManager cacheManager(CustomRedisManager redisManager) {
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        redisCacheManager.setRedisManager(redisManager);
+        return redisCacheManager;
+    }
+
+    /**
+     * EhCache 缓存
+     */
+    @Bean
+    public EhCacheManager ehCacheManager() {
+        EhCacheManager em = new EhCacheManager();
+        em.setCacheManagerConfigFile("classpath:config/shiro-ehcache.xml");
+        return em;
     }
 
 }

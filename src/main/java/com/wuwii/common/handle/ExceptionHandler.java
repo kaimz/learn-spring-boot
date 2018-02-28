@@ -4,6 +4,7 @@ import com.wuwii.common.exception.KCException;
 import org.apache.shiro.authc.CredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -68,14 +69,16 @@ public class ExceptionHandler {
         return ResponseEntity.status(CONFLICT).body("数据库中已存在该记录");
     }
 
+
     @org.springframework.web.bind.annotation.ExceptionHandler(LockedAccountException.class)
     public ResponseEntity<String> handleLockedAccountException(LockedAccountException e) {
         LOGGER.debug(e.getMessage(), e);
-        return ResponseEntity.status(UNAUTHORIZED).body("账号已被锁定,请联系管理员");
+        return ResponseEntity.status(FORBIDDEN).body("账号已被锁定,请联系管理员");
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(CredentialsException.class)
-    public ResponseEntity<String> handleCredentialsException(CredentialsException e) {
+    @org.springframework.web.bind.annotation.ExceptionHandler({CredentialsException.class,
+            UnauthenticatedException.class})
+    public ResponseEntity<String> handleCredentialsException(Exception e) {
         LOGGER.debug(e.getMessage(), e);
         return ResponseEntity.status(UNAUTHORIZED).body("登陆信息失效，请重新登录");
     }

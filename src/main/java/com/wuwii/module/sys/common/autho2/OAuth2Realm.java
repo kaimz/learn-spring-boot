@@ -73,7 +73,7 @@ public class OAuth2Realm extends AuthorizingRealm {
         // 明文验证
         return new SimpleAuthenticationInfo(
                 user, // 存入凭证的信息，登陆成功后可以使用 SecurityUtils.getSubject().getPrincipal();在任何地方使用它
-                Optional.ofNullable(user).map(SysUserEntity::getPassword),
+                Optional.ofNullable(user).map(SysUserEntity::getPassword).orElse(""),
                 ByteSource.Util.bytes(Optional.ofNullable(user).map(SysUserEntity::getSalt).orElse("")),
                 getName());
 

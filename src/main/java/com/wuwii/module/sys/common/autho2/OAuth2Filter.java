@@ -11,7 +11,6 @@ import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
@@ -56,7 +55,6 @@ public class OAuth2Filter extends FormAuthenticationFilter {
             Jwts.parser().setSigningKey(jwtUtils.getSecret()).parseClaimsJws(token).getBody();
         } catch (Exception e) {
             // 身份验证失败，返回 false 将进入onAccessDenied 判断是否登陆。
-            onLoginFail(response);
             return false;
         }
         Long userId = getUserIdFromToken(token);
@@ -115,9 +113,9 @@ public class OAuth2Filter extends FormAuthenticationFilter {
      */
     private void onLoginFail(ServletResponse response) {
         ((HttpServletResponse) response).setStatus(HttpStatus.UNAUTHORIZED.value());
-        ((HttpServletResponse) response).setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        //((HttpServletResponse) response).setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         try {
-            ((HttpServletResponse) response).getWriter().print("没有权限，请联系管理员授权");
+            ((HttpServletResponse) response).getWriter().print("登陆信息失效，请重新登录");
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }

@@ -24,6 +24,6 @@ hs_err_pid*
 .idea/
 .mvn
 learnboot.iml
-target
+target/
 /log/
 /src/docs/
