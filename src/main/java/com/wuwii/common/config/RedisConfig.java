@@ -18,6 +18,12 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 @Configuration
 public class RedisConfig {
 
+    /**
+     * 注册 RedisTemplate 用于 redis 存储对象的序列化和反序列化
+     *
+     * @param factory
+     * @return
+     */
     @Bean
     public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
         StringRedisTemplate template = new StringRedisTemplate(factory);

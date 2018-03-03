@@ -24,7 +24,7 @@ spring:
       charset: utf-8
       enabled: true
   redis:
-    host: 192.168.19.200 # host ,默认 localhost
+    host: r-wz93b87d7774bfc4.redis.rds.aliyuncs.com # host ,默认 localhost
     port: 6379 # 端口号，默认6379
     pool:
     # 设置都是默认值，可以按需求设计
@@ -33,9 +33,12 @@ spring:
       max-wait: -1 # 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。
       min-idle: 0 # 控制一个pool最少有多少个状态为idle(空闲的)的redis实例，默认值为0。
     timeout: 0 # 连接超时时间 单位 ms，默认为0
-    password: master # 密码，根据自己的 redis 设计，默认为空
+    password: zk@595165463 # 密码，根据自己的 redis 设计，默认为空
   session:
     store-type: redis
+  data:
+    mongodb:
+      uri: mongodb://wuwii:123456@localhost:27017/learn
 
   #resources: # 指定静态资源的路径
    # static-locations: classpath:/static/,classpath:/views/

@@ -1,4 +1,4 @@
-package com.wuwii.util;
+package com.wuwii.testredis;
 
 import com.wuwii.module.sys.entity.SysUserEntity;
 import org.hamcrest.Matchers;
