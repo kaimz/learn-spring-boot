@@ -24,7 +24,7 @@ spring:
       charset: utf-8
       enabled: true
   redis:
-    host: 192.1638.80.130 # host ,默认 localhost
+    host: 192.168.80.130 # host ,默认 localhost
     port: 6379 # 端口号，默认6379
     pool:
     # 设置都是默认值，可以按需求设计
@@ -39,6 +39,7 @@ spring:
   data:
     mongodb:
       uri: mongodb://wuwii:123456@localhost:27017/learn
+
 
   #resources: # 指定静态资源的路径
    # static-locations: classpath:/static/,classpath:/views/

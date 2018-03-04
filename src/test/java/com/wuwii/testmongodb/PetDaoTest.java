@@ -1,10 +1,7 @@
 package com.wuwii.testmongodb;
 
 import org.hamcrest.Matchers;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@FixMethodOrder(MethodSorters.DEFAULT)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PetDaoTest {
 
     @Autowired
@@ -27,16 +24,19 @@ public class PetDaoTest {
     private Pet pet;
 
     @Before
-    public void befor() {
+    public void before() {
         pet = new Pet();
         pet.setId(1L);
         pet.setName("Tom");
         pet.setSpecies("cat");
     }
 
+    @After
+    public void after() {
+    }
 
     @Test
-    public void testAdd() {
+    public void test01Add() {
         Pet pet = new Pet();
         pet.setId(1L);
         pet.setName("Tom");
@@ -45,26 +45,26 @@ public class PetDaoTest {
     }
 
     @Test
-    public void testFind() {
+    public void test02Find() {
         Assert.assertThat(pet, Matchers.equalTo(petDao.find(pet.getId())));
     }
 
     @Test
-    public void testFindAll() {
+    public void test03FindAll() {
         System.out.println(petDao.findAll());
     }
 
     @Test
-    public void testDelete() {
-        petDao.delete(pet.getId());
-        Assert.assertThat(null, Matchers.equalTo(petDao.find(pet.getId())));
-    }
-
-    @Test
-    public void testUpdate() {
-        testAdd();
+    public void test04Update() {
         pet.setName("KronChan");
         petDao.update(pet);
         Assert.assertThat(pet, Matchers.equalTo(petDao.find(pet.getId())));
     }
+
+    @Test
+    public void test05Delete() {
+        petDao.delete(pet.getId());
+        Assert.assertThat(null, Matchers.equalTo(petDao.find(pet.getId())));
+    }
+
 }
