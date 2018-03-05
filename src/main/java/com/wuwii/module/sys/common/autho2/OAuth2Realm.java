@@ -9,6 +9,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.cache.CacheManager;
 
 import javax.annotation.Resource;
 import java.util.Optional;
@@ -22,6 +23,8 @@ public class OAuth2Realm extends AuthorizingRealm {
     private ShiroService shiroService;
     @Resource
     private SysUserService sysUserService;
+    @Resource
+    private CacheManager cacheManager;
 
 
 

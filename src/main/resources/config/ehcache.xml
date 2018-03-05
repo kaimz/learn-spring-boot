@@ -4,8 +4,8 @@
          updateCheck="false">
     <diskStore path="java.io.tmpdir/Tmp_EhCache"/>
     <defaultCache
-            maxElementsInMemory="1000"
-            maxEntriesLocalHeap="400"
+            maxElementsInMemory="10000"
+            maxEntriesLocalHeap="4000"
             eternal="false"
             timeToIdleSeconds="120"
             timeToLiveSeconds="120"
@@ -13,6 +13,15 @@
             diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"/>
 
+    <!-- 登录记录缓存锁定1小时 -->
+    <cache
+            name="passwordRetryCache"
+            maxEntriesLocalHeap="200"
+            eternal="false"
+            timeToIdleSeconds="3600"
+            timeToLiveSeconds="0"
+            overflowToDisk="false"
+            statistics="true"/>
     <cache
             name="users"
             maxEntriesLocalHeap="200"

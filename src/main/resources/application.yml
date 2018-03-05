@@ -24,7 +24,7 @@ spring:
       charset: utf-8
       enabled: true
   redis:
-    host: 192.168.80.130 # host ,默认 localhost
+    host: 120.79.208.199 # host ,默认 localhost
     port: 6379 # 端口号，默认6379
     pool:
     # 设置都是默认值，可以按需求设计
@@ -33,13 +33,17 @@ spring:
       max-wait: -1 # 等待可用连接的最大时间，单位毫秒，默认值为-1，表示永不超时。
       min-idle: 0 # 控制一个pool最少有多少个状态为idle(空闲的)的redis实例，默认值为0。
     timeout: 0 # 连接超时时间 单位 ms，默认为0
-    password: master # 密码，根据自己的 redis 设计，默认为空
+    password: KronChan123 # 密码，根据自己的 redis 设计，默认为空
   session:
     store-type: redis
   data:
     mongodb:
       uri: mongodb://wuwii:123456@localhost:27017/learn
-
+  cache:
+    ehcache:
+      config: config/ehcache.xml
+  aop:
+    proxy-target-class: true
 
   #resources: # 指定静态资源的路径
    # static-locations: classpath:/static/,classpath:/views/
@@ -51,7 +55,6 @@ mybatis:
         map-underscore-to-camel-case: true
     type-aliases-package: com.wuwii.module.**.entity
     typeHandlersPackage: com.wuwii.module.sys.common.handle,com.wuwii.module.task.common.handle
-
 
 pagehelper:
   helper-dialect: mysql

@@ -2,6 +2,8 @@ package com.wuwii.module.sys.service;
 
 import com.wuwii.module.sys.entity.SysUserEntity;
 import com.wuwii.module.sys.entity.SysUserTokenEntity;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.Set;
 
@@ -12,6 +14,7 @@ import java.util.Set;
  * @version 1.0
  * @since <pre>2018/2/9 15:31</pre>
  */
+@CacheConfig(cacheNames = "users")
 public interface ShiroService {
     /**
      * 获取用户权限
@@ -19,6 +22,7 @@ public interface ShiroService {
      * @param userId 用户ID
      * @return 权限
      */
+    @Cacheable
     Set<String> getUserPermissions(long userId);
 
     /**
