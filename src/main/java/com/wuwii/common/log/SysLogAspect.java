@@ -1,10 +1,11 @@
 package com.wuwii.common.log;
 
+import com.wuwii.module.sys.entity.SysUserEntity;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 /**
  * @author Zhang Kai
@@ -29,5 +30,20 @@ public class SysLogAspect {
         long time = System.currentTimeMillis() - beginTime;
 
         return result;
+    }
+
+    @Pointcut("bean(sysUserServiceImpl) && args(userEntity,..)")
+    public void userPointCut(SysUserEntity userEntity) {
+
+    }
+
+    @Before("userPointCut(userEntity)")
+    public void validateUser(SysUserEntity userEntity) {
+        // to handler args
+    }
+
+    @AfterReturning(pointcut = "logPointCut()", returning = "rvt")
+    public void logAfter(Object rvt) {
+        System.out.println(Objects.toString(rvt));
     }
 }
