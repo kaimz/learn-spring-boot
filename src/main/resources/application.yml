@@ -41,8 +41,9 @@ spring:
       uri: mongodb://wuwii:123456@localhost:27017/learn
   cache:
     ehcache:
-      config: config/ehcache.xml # 指定 ehcache.xml 创建EhCache的缓存管理器
-    type: ehcache # 指定缓存管理器
+     # config: config/ehcache.xml # 指定 ehcache.xml 创建EhCache的缓存管理器
+    #type: ehcache # 指定缓存管理器
+    type: redis
   aop:
     proxy-target-class: true
 
