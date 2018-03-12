@@ -30,7 +30,7 @@ import static org.springframework.http.HttpStatus.*;
  */
 @RestController
 @RequestMapping("/sys/user")
-@Api("用户管理")
+@Api(value = "用户管理", tags = "用户管理")
 public class SysUserController extends BaseController {
     @Autowired
     private SysUserService sysUserService;
@@ -84,6 +84,20 @@ public class SysUserController extends BaseController {
         userEntity.setCreateUserId(getUserId());
         sysUserService.save(userEntity);
         return ResponseEntity.status(CREATED).body("新增成功");
+    }
+
+    @ApiOperation("更新")
+    @ApiImplicitParam(name = "user", value = "用户信息", required = true, paramType = "body")
+    @PutMapping()
+    public ResponseEntity update(@Validated @RequestBody SysUserEntity userEntity) {
+        sysUserService.update(userEntity);
+        return ResponseEntity.status(OK).body("更新成功");
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity query(@PathVariable long id) {
+        return ResponseEntity.status(OK).body(sysUserService.queryObject(id));
     }
 
 }
