@@ -181,14 +181,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-        </dependency>-->
+        </dependency>
     </dependencies>
 
     <build>
-        <finalName>${artifactId}</finalName>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -234,6 +234,29 @@
                     <attributes>
                         <toc>left</toc>
                     </attributes>
+                </configuration>
+            </plugin>
+            <!--打包docker插件相关参数的配置-->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.14</version>
+                <configuration>
+                    <!--打包的镜像名-->
+                    <imageName>${project.groupId}/${project.artifactId}</imageName>
+                    <!--Dockerfile文件位置，以项目的 root 目录为根节点-->
+                    <dockerDirectory>/</dockerDirectory>
+                    <!--Docker 远程的 API 地址及端口-->
+                    <dockerHost>http://192.168.1.200:2375</dockerHost>
+                    <!--执行构建docker镜像的时候需要哪些文件，springboot项目指定 打包好的jar 镜像就好-->
+                    <resources>
+                        <resource>
+                            <!--这里指定的文件是target中的jar文件-->
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
                 </configuration>
             </plugin>
         </plugins>

@@ -3,8 +3,6 @@ package com.wuwii.module.sys.service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.wuwii.module.sys.entity.SysUserEntity;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
 
@@ -13,7 +11,7 @@ import java.util.List;
  * @email k@wuwii.com
  * @date 2018-01-30 16:47:32
  */
-@CacheConfig(cacheNames = "user")
+
 public interface SysUserService {
 
     List query(SysUserEntity user);
@@ -22,7 +20,6 @@ public interface SysUserService {
 
     PageInfo queryByPageInfo(SysUserEntity user);
 
-    @Cacheable(key = "#p0")
     SysUserEntity queryObject(Long id);
 
     void save(SysUserEntity sysUser);

@@ -38,4 +38,12 @@ public class RedisConfig {
         return template;
     }
 
+    /*@Bean
+    public CacheManager cacheManager(RedisTemplate redisTemplate) {
+        RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate);
+        // 设置缓存最大时间 24 h
+        redisCacheManager.setDefaultExpiration(24 * 60 * 60);
+        return redisCacheManager;
+    }*/
+
 }

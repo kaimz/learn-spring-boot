@@ -9,6 +9,8 @@ import com.wuwii.module.sys.common.util.SysConstant;
 import com.wuwii.module.sys.dao.SysUserDao;
 import com.wuwii.module.sys.entity.SysUserEntity;
 import com.wuwii.module.sys.service.SysUserService;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,6 +19,7 @@ import java.util.List;
 
 
 @Service
+@CacheConfig(cacheNames = "user")
 public class SysUserServiceImpl implements SysUserService {
     @Resource
     private SysUserDao sysUserDao;
@@ -38,6 +41,7 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
+    @Cacheable(key = "#p0")
     public SysUserEntity queryObject(Long id) {
         return sysUserDao.queryObject(id);
     }

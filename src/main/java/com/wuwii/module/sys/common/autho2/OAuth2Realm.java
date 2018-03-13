@@ -10,6 +10,8 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 
 import javax.annotation.Resource;
 import java.util.Optional;
@@ -18,6 +20,7 @@ import java.util.Set;
 /**
  * 认证
  */
+@CacheConfig(cacheNames = "realm")
 public class OAuth2Realm extends AuthorizingRealm {
     @Resource
     private ShiroService shiroService;
@@ -52,9 +55,13 @@ public class OAuth2Realm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SysUserEntity user = (SysUserEntity) (principals.getPrimaryPrincipal());
+        return getAuthorizationInfo(user.getId());
+    }
 
+    @Cacheable(key = "#p0")
+    public AuthorizationInfo getAuthorizationInfo(Long userId) {
         //用户权限列表
-        Set<String> permsSet = shiroService.getUserPermissions(user.getId());
+        Set<String> permsSet = shiroService.getUserPermissions(userId);
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.setStringPermissions(permsSet);
